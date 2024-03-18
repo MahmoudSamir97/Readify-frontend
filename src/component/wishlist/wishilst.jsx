@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from 'react';
-import { motion } from 'framer-motion'; // Import motion for animation
-import images from './../../images';
-import { Link } from 'react-router-dom';
-import './wishlist.css';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSadTear } from '@fortawesome/free-solid-svg-icons'; // Import the sad face icon
+import React, { useEffect, useState } from "react";
+import { motion } from "framer-motion"; // Import motion for animation
+import images from "../../assets/images";
+import { Link } from "react-router-dom";
+import "./wishlist.css";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faSadTear } from "@fortawesome/free-solid-svg-icons"; // Import the sad face icon
 
 const Wishlist = ({ books, onDelete }) => {
   const [wishBooks, setWishBooks] = useState([]);
@@ -15,10 +15,12 @@ const Wishlist = ({ books, onDelete }) => {
 
   // Function to remove a book from the wishlist
   const handleRemove = (bookToRemove) => {
-    const updatedWishBooks = wishBooks.filter((book) => book.id !== bookToRemove.id);
+    const updatedWishBooks = wishBooks.filter(
+      (book) => book.id !== bookToRemove.id
+    );
     setWishBooks(updatedWishBooks);
     onDelete(bookToRemove); // Call onDelete function to remove from parent component
-    localStorage.setItem('wishlist', JSON.stringify(updatedWishBooks)); // Update local storage
+    localStorage.setItem("wishlist", JSON.stringify(updatedWishBooks)); // Update local storage
   };
 
   // Check if there are no books in the wishlist
@@ -28,17 +30,30 @@ const Wishlist = ({ books, onDelete }) => {
     <div className="wishlist mt-5 p-3 rounded cart">
       {isWishlistEmpty ? (
         <div className="text-center">
-          <FontAwesomeIcon icon={faSadTear} size="4x" className="text-muted mb-3" />
+          <FontAwesomeIcon
+            icon={faSadTear}
+            size="4x"
+            className="text-muted mb-3"
+          />
           <p className="mb-3">You haven't added any favorite books yet!</p>
-          <p className="mb-3">Add some books to your wishlist by browsing our collection.</p>
+          <p className="mb-3">
+            Add some books to your wishlist by browsing our collection.
+          </p>
           <Link to="/allbooks">
-            <button className="btn btn-outline-secondary">Go To Shopping</button>
+            <button className="btn btn-outline-secondary">
+              Go To Shopping
+            </button>
           </Link>
         </div>
       ) : (
         <div className="row">
           {wishBooks.map((book, index) => (
-            <BookItem key={book.id} book={book} index={index} handleRemove={handleRemove} />
+            <BookItem
+              key={book.id}
+              book={book}
+              index={index}
+              handleRemove={handleRemove}
+            />
           ))}
         </div>
       )}
@@ -70,7 +85,12 @@ const BookItem = ({ book, index, handleRemove }) => {
               <p>{book.description}</p>
             </div>
             <div className="remove-btn">
-              <button className="btn btn-danger" onClick={() => handleRemove(book)}>Remove</button>
+              <button
+                className="btn btn-danger"
+                onClick={() => handleRemove(book)}
+              >
+                Remove
+              </button>
             </div>
           </div>
         </div>
