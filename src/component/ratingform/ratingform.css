@@ -1,0 +1,67 @@
+.rating-form {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 600px; /* Adjust the width as needed */
+  padding: 20px;
+  background-color: rgba(255, 255, 255, 0.8); /* Transparent white background */
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); /* Add a subtle shadow */
+}
+
+.rating-form h3 {
+  text-align: center;
+}
+
+.rating {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.rating .fa-star {
+  font-size: 24px;
+  color: #ccc;
+  cursor: pointer;
+}
+
+.rating .fa-star.checked {
+  color: gold;
+}
+
+textarea {
+  width: 100%;
+  height: 100px; /* Adjust the height as needed */
+  resize: vertical; /* Allow vertical resizing */
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  margin-bottom: 20px;
+}
+
+.btn-primary,
+.btn-secondary {
+  width: 100%;
+  padding: 10px;
+  font-size: 16px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.btn-primary {
+  background-color: #af460f !important; /* Set background color for primary button */
+  color: #fff; /* Set text color for primary button */
+}
+
+.btn-secondary {
+  background-color: #c7b198 !important; /* Set background color for secondary button */
+  color: #fff; /* Set text color for secondary button */
+}
+
+.btn-primary:hover,
+.btn-secondary:hover {
+  opacity: 0.8;
+}

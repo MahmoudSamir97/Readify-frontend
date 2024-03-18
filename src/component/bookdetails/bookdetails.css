@@ -1,0 +1,27 @@
+.bookdetails {
+    display: flex;
+    justify-content: space-between;
+    background-color: white;
+    max-width: 900px;
+    border-radius: 7px;
+    padding: 10px;
+    box-shadow: 0px 14px 32px 0px rgba(0, 0, 0, 0.15);
+}
+
+@media (max-width: 900px) {
+    .bookdetails {
+        flex-wrap: wrap;
+    }
+}
+
+.review {
+    background-color: #f0f0f0;
+    border-radius: 5px;
+    padding: 10px;
+    margin-bottom: 10px;
+    transition: z-index 0.3s; /* Add transition for z-index */
+}
+
+.review:hover {
+    z-index: 1; /* Bring the hovered div to the front */
+}
