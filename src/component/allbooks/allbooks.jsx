@@ -9,6 +9,10 @@ const AllBooks = ({ books }) => {
 
     const BooksNameOptions = [
         {
+            value: 'All Books',
+            text: 'All Books',
+        },
+        {
             value: 'Economy',
             text: 'Economy',
         },
@@ -32,6 +36,10 @@ const AllBooks = ({ books }) => {
 
     const priceOptions = [
         {
+            value: 'Price',
+            text: 'Price',
+        },
+        {
             value: 5,
             text: '0 - 5$',
         },
@@ -46,22 +54,24 @@ const AllBooks = ({ books }) => {
     ];
 
     const handleSelectName = (e) => {
-        if (e.target.value === 'All Books') {
+        const selectedName = e.target.value;
+        if (selectedName === 'All Books') {
             setSelectedBooks(books);
         } else {
-            const selected = books.filter((book) => book.name === e.target.value);
+            const selected = books.filter((book) => book.name === selectedName);
             setSelectedBooks(selected);
         }
     };
 
     const handleSelectPrice = (e) => {
-        if (e.target.value === 'Price') {
+        const selectedPrice = e.target.value;
+        if (selectedPrice === 'Price') {
             setSelectedBooks(books);
         } else {
             const selectedWithPrice =
                 selectedBooks.length > 0
-                    ? selectedBooks.filter((book) => book.price <= e.target.value)
-                    : books.filter((book) => book.price <= e.target.value);
+                    ? selectedBooks.filter((book) => book.price <= selectedPrice)
+                    : books.filter((book) => book.price <= selectedPrice);
             setSelectedBooks(selectedWithPrice);
         }
     };
@@ -77,7 +87,6 @@ const AllBooks = ({ books }) => {
                     <form className="row mx-auto">
                         <div className="col-sm-4 mb-3">
                             <select className="form-control" onChange={handleSelectName}>
-                                <option>All Books</option>
                                 {BooksNameOptions.map((option) => (
                                     <option key={option.value} value={option.value}>
                                         {option.text}
@@ -87,7 +96,6 @@ const AllBooks = ({ books }) => {
                         </div>
                         <div className="col-sm-4 mb-3">
                             <select className="form-control" onChange={handleSelectPrice}>
-                                <option>Price</option>
                                 {priceOptions.map((option) => (
                                     <option key={option.value} value={option.value}>
                                         {option.text}
@@ -96,7 +104,7 @@ const AllBooks = ({ books }) => {
                             </select>
                         </div>
                         <div className="col-sm-4 mb-3">
-                            <button className="btn btn-danger btn-round btn-g" type="submit" onClick={handleReset}>
+                            <button className="btn btn-outline-secondary" type="button" onClick={handleReset}>
                                 Reset
                             </button>
                         </div>
@@ -116,13 +124,10 @@ const AllBooks = ({ books }) => {
                             <div className="shop-item-image">
                                 <Link to={`./bookdetails/${book.id}`}>
                                     <img src={images[book.id]} alt="book" loading="lazy" />
-                                    <i className="fas fa-cart-shopping cart-icon"></i>
+                                    
                                 </Link>
-                            </div>
-                            <div className="thumb-content">
-                                <h5>{book.name}</h5>
-                                <div className="item-price">
-                                    <strike>{book.oldPrice}$</strike> <span>{book.price}$</span>
+                                <div className="transparent-div">
+                                    <Link className="detail-link" to={`./bookdetails/${book.id}`}>View Details</Link>
                                 </div>
                             </div>
                         </motion.div>

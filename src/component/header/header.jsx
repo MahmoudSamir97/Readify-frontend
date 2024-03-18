@@ -17,7 +17,7 @@ const Header = () => {
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ delay: 0.1 }}
                     >
-                        Readify <b> Book Store</b>
+                        Readify <b> </b>
                     </motion.h2>
                     <motion.p
                         initial={{ opacity: 0 }}

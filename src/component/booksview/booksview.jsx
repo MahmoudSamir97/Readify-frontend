@@ -55,13 +55,7 @@ const BookItem = ({ book, index, images }) => {
       <Link to={`./bookdetails/${book.id}`}>
         <img src={images[index % images.length]} alt={`book-${index}`} loading="lazy" />
       </Link>
-      <div className="thumb-content">
-        <h5>{book.name}</h5>
-        <p className="item-price">
-          <strike>{book.price}</strike> <span> 25%</span>
-        </p>
-        <p className="book-description">{book.description}</p> {/* Display book description */}
-      </div>
+      
     </motion.div>
   );
 };

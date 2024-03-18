@@ -23,7 +23,9 @@ const Navbar = ({ user, setUser }) => {
       <nav ref={stickyRef} className={sticky ? "sticky navbar navbar-expand-lg  navbar-light shadow" :  "navbar navbar-expand-lg  navbar-light shadow"}>
         <div className="container d-flex justify-content-between align-items-center">
           <Link className="navbar-brand text-danger logo h1 align-self-center" to={"/"}>
-            <span className="animated-title">Readify<span className="text-black">BookShop</span></span>
+          
+            <img src="https://i.pinimg.com/564x/b2/40/1e/b2401ef6d1079b6a902d6be6acf85c0e.jpg" alt="Readify Logo" className="logo-image" style={{ maxWidth: "40px" }} />
+            <span className="animated-title">  Readify </span>
           </Link>
 
           <div className="navbar-toggler custom-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
@@ -43,7 +45,7 @@ const Navbar = ({ user, setUser }) => {
                     <li className="nav-item mx-lg-4">
                       <Link className="nav-link" aria-current="page" to={"/"}>Home</Link>
                     </li>
-                    
+
 
                     <li className="nav-item mx-lg-4">
                       <Link className="nav-link" to={"/allbooks"}>All Books</Link>
@@ -52,7 +54,7 @@ const Navbar = ({ user, setUser }) => {
                       <Link className="nav-link" to={"/contact"}>contact</Link>
                     </li>
 
-                    
+
                     <li className="nav-item mx-lg-4">
                       <Link className="nav-link" to={"/aboutus"}>About us</Link>
                     </li>
@@ -69,7 +71,7 @@ const Navbar = ({ user, setUser }) => {
                 <i className="fa fa-fw fa-cart-arrow-down text-dark" />
                 <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-light text-dark">{cartnum.length}</span>
               </NavLink>
-              
+
               <div className="dropdown">
                 <button className="btn dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
                   <img src="/path_to_dropdown_icon" alt="Dropdown" />
@@ -80,7 +82,7 @@ const Navbar = ({ user, setUser }) => {
                   <li><a className="dropdown-item" href="#">Logout</a></li>
                 </ul>
               </div>
-              
+
               <div>
                 {user ?
                   <User user={user} setUser={setUser} />
