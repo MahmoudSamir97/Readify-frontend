@@ -23,9 +23,9 @@ const BooksView = ({ books }) => {
       <div className="container" id="Scicence">
         <div className="row-reverse">
           <div className="col-md-12">
-          <h2>
-                NEW <b>Books</b>
-              </h2>
+            <h2>
+              NEW <b>Books</b>
+            </h2>
           </div>
           <div className="books">
             {limitedBooks.map((book, index) => (
@@ -66,7 +66,6 @@ const BookItem = ({ book, index, images }) => {
           loading="lazy"
         />
       </Link>
-      
     </motion.div>
   );
 };

@@ -1,109 +1,115 @@
 /* allbooks.css */
 
 body {
-    background-color: #ffffff; /* White background color */
+  background-color: #ffffff; /* White background color */
 }
 
 .most-books {
-    background-color: #ffffff; /* White background color */
-    padding-bottom: 20px;
+  background-color: #ffffff; /* White background color */
+  padding-bottom: 20px;
 }
 
 .books {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr); /* Four books per row */
-    gap: 20px; /* Space between each book */
-    justify-items: center; /* Center items horizontally */
+  display: grid;
+  grid-template-columns: repeat(4, 1fr); /* Four books per row */
+  gap: 20px; /* Space between each book */
+  justify-items: center; /* Center items horizontally */
 }
 
 .book {
-    width: 100%; /* Take full width of its container */
-    box-shadow: 20px 20px 20px -2px rgba(0, 0, 0, 0.42);
-    background-color: whitesmoke;
-    position: relative; /* Added for positioning cart icon */
+  width: 100%; /* Take full width of its container */
+  box-shadow: 20px 20px 20px -2px rgba(0, 0, 0, 0.42);
+  background-color: whitesmoke;
+  position: relative; /* Added for positioning cart icon */
 }
 
 .shop-item-image {
-    position: relative;
+  position: relative;
 }
 
 .shop-item-image img {
-    display: block;
-    width: 100%;
-    height: auto;
-    border-radius: 10px;
-    cursor: pointer;
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 10px;
+  cursor: pointer;
 }
 
 .thumb-content {
-    padding: 10px;
-    text-align: center;
+  padding: 10px;
+  text-align: center;
 }
 
 .thumb-content h5 {
-    color: #000001;
-    font-family: sans-serif;
-    font-size: 16px;
-    margin-bottom: 5px;
+  color: #000001;
+  font-family: sans-serif;
+  font-size: 16px;
+  margin-bottom: 5px;
 }
 
 .item-price {
-    font-size: 16px;
+  font-size: 16px;
 }
 
 .item-price strike {
-    color: #313335;
+  color: #313335;
 }
 
 .item-price span {
-    color: #00b90f;
+  color: #00b90f;
 }
 
 .form-control {
-    width: 100%;
-    margin-bottom: 10px;
+  width: 100%;
+  margin-bottom: 10px;
 }
 
 @media screen and (max-width: 768px) {
-    .books {
-        grid-template-columns: repeat(2, 1fr); /* Two books per row for smaller screens */
-    }
+  .books {
+    grid-template-columns: repeat(
+      2,
+      1fr
+    ); /* Two books per row for smaller screens */
+  }
 }
 
 @media screen and (max-width: 480px) {
-    .books {
-        grid-template-columns: repeat(1, 1fr); /* One book per row for mobile screens */
-    }
+  .books {
+    grid-template-columns: repeat(
+      1,
+      1fr
+    ); /* One book per row for mobile screens */
+  }
 }
 
 .transparent-div {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.3); /* Adjust the opacity as needed */
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    opacity: 0; /* Initially hidden */
-    transition: opacity 0.3s ease; /* Smooth transition effect */
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.3); /* Adjust the opacity as needed */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  opacity: 0; /* Initially hidden */
+  transition: opacity 0.3s ease; /* Smooth transition effect */
 }
 
 .book:hover .transparent-div {
-    opacity: 1; /* Show the transparent div on hover */
+  opacity: 1; /* Show the transparent div on hover */
 }
 
 .detail-link {
-    color: white; /* Text color */
-    text-decoration: none; /* Remove underline */
-    font-size: 16px; /* Adjust font size */
-    font-weight: bold; /* Make text bold */
-    padding: 10px 20px; /* Add padding */
-    border-radius: 5px; /* Add rounded corners */
-    transition: background-color 0.3s ease; /* Smooth transition effect */
+  color: white; /* Text color */
+  text-decoration: none; /* Remove underline */
+  font-size: 16px; /* Adjust font size */
+  font-weight: bold; /* Make text bold */
+  padding: 10px 20px; /* Add padding */
+  border-radius: 5px; /* Add rounded corners */
+  transition: background-color 0.3s ease; /* Smooth transition effect */
 }
 
 .detail-link:hover {
-    background-color: #ffffff; /* Darker background color on hover */
+  background-color: #ffffff; /* Darker background color on hover */
 }

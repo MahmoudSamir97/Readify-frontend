@@ -44,10 +44,9 @@ const NewBooks = ({ books }) => {
         <div className={`container ${inView ? "visible" : ""}`} id="novels">
           <div className="row">
             <div className="col-md-12 mx-auto">
-              
               <h2>
-              Most <b>Rated Books</b>
-            </h2>
+                Most <b>Rated Books</b>
+              </h2>
               <motion.div className="inner-carousel">
                 {limitedBooks.map((book, index) => (
                   <motion.div

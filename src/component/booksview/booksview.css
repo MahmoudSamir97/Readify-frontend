@@ -2,7 +2,7 @@
 .most-books {
   background-color: rgb(255, 255, 255);
 }
-.most-books .books{
+.most-books .books {
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -11,10 +11,9 @@
   margin: 20px auto;
 }
 
-.most-books  .books .book {
+.most-books .books .book {
   width: 17%;
   margin: 10px;
-  
 }
 
 .most-books .book img {
@@ -51,14 +50,10 @@
   color: #00b90f;
 }
 
-
-
-
 @media (min-width: 769px) and (max-width: 1024px) {
   .most-books .book {
     min-height: 8rem;
     min-width: 10rem;
-   
   }
   .seemore-Btn {
     font-size: 12px;
@@ -73,8 +68,8 @@
   }
 }
 
-@media screen and (min-width: 300px) and (max-width: 600px)   {
-  .most-books  .books .book {
+@media screen and (min-width: 300px) and (max-width: 600px) {
+  .most-books .books .book {
     width: 40%;
     margin-bottom: 5px;
   }
