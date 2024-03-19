@@ -5,6 +5,7 @@ import Books from "../db";
 import User from "../user/user";
 import useSticky from "./useSticky";
 import logo from "./../../assets/images/icons8-book-48.png";
+import chatlogo from "./../../assets/images/chat-logo.png";
 
 const Navbar = ({ user, setUser }) => {
   const [cartnum, setCartNum] = useState([]);
@@ -72,12 +73,12 @@ const Navbar = ({ user, setUser }) => {
 
                     <li className="nav-item mx-lg-4">
                       <Link className="nav-link" to={"/allbooks"}>
-                        All Books
+                        Books
                       </Link>
                     </li>
                     <li className="nav-item mx-lg-4">
                       <Link className="nav-link" to={"/contact"}>
-                        contact
+                        Contact
                       </Link>
                     </li>
 
