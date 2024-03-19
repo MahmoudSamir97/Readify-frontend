@@ -31,19 +31,12 @@ const Navbar = ({ user, setUser }) => {
         }
       >
         <div className="container d-flex justify-content-between align-items-center">
-<<<<<<< HEAD
-          <Link className="navbar-brand text-danger logo h1 align-self-center" to={"/"}>
-          
-            <img src="https://i.pinimg.com/564x/b2/40/1e/b2401ef6d1079b6a902d6be6acf85c0e.jpg" alt="Readify Logo" className="logo-image" style={{ maxWidth: "40px" }} />
-            <span className="animated-title">  Readify </span>
-=======
           <Link
             className="navbar-brand text-danger logo h1 align-self-center"
             to={"/"}
           >
             <img src={logo} alt="logo" className="logo" />
             <span className="animated-title text-black">Readify</span>
->>>>>>> 4d8ea339b659d78dd1ca83cb19704771d0c5397e
           </Link>
 
           <div
@@ -73,26 +66,11 @@ const Navbar = ({ user, setUser }) => {
                 ) : (
                   <>
                     <li className="nav-item mx-lg-4">
-<<<<<<< HEAD
-                      <Link className="nav-link" aria-current="page" to={"/"}>Home</Link>
-                    </li>
-
-
-                    <li className="nav-item mx-lg-4">
-                      <Link className="nav-link" to={"/allbooks"}>All Books</Link>
-                    </li>
-                    <li className="nav-item mx-lg-4">
-                      <Link className="nav-link" to={"/contact"}>contact</Link>
-                    </li>
-
-
-=======
                       <Link className="nav-link" aria-current="page" to={"/"}>
                         Home
                       </Link>
                     </li>
 
->>>>>>> 4d8ea339b659d78dd1ca83cb19704771d0c5397e
                     <li className="nav-item mx-lg-4">
                       <Link className="nav-link" to={"/allbooks"}>
                         Books

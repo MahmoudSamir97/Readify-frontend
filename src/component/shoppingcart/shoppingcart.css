@@ -7,6 +7,7 @@
 
 body {
   background: #eee;
+ 
 }
 
 .product-details {
@@ -34,6 +35,7 @@ body {
 .cart {
   background: #fff;
   font-family: "Poppins", sans-serif;
+  height: 100%;
 }
 
 /* Updated styles for table */
@@ -41,11 +43,12 @@ body {
   margin-top: 10px;
   width: 100%;
   border-collapse: collapse;
+  height: 300px;
 }
 
 .tablecart thead {
   font-size: 14px;
-  border-color: #edf1ff;
+  border-color: #000000;
   background-color: #af460f;
   color: white; /* Change text color of table head to white */
 }

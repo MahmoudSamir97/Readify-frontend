@@ -1,6 +1,11 @@
 /* allbooks.css */
+
+body {
+    background-color: #ffffff; /* White background color */
+}
+
 .most-books {
-    background-color: rgb(255, 255, 255);
+    background-color: #ffffff; /* White background color */
     padding-bottom: 20px;
 }
 
@@ -70,7 +75,6 @@
         grid-template-columns: repeat(1, 1fr); /* One book per row for mobile screens */
     }
 }
-/* Add this to your existing CSS file or create a new one */
 
 .transparent-div {
     position: absolute;
@@ -103,4 +107,3 @@
 .detail-link:hover {
     background-color: #ffffff; /* Darker background color on hover */
 }
-
