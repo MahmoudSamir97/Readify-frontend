@@ -1,15 +1,19 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faGithub, faTwitter, faFacebook } from '@fortawesome/free-brands-svg-icons';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faGithub,
+  faTwitter,
+  faFacebook,
+} from "@fortawesome/free-brands-svg-icons";
 import "./contact.css"; // Import your external CSS file for styling
-import contactImage from "../../images/img8.jpeg"; // Import the image
+import contactImage from "../../assets/images/img8.jpeg"; // Import the image
 
 const ContactUs = () => {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
-    message: ""
+    message: "",
   });
   const [errors, setErrors] = useState({});
   const [successMessage, setSuccessMessage] = useState(""); // State for success message
@@ -26,7 +30,7 @@ const ContactUs = () => {
       setFormData({
         name: "",
         email: "",
-        message: ""
+        message: "",
       });
       // Clear errors
       setErrors({});
@@ -74,11 +78,11 @@ const ContactUs = () => {
     const { name, value } = e.target;
     setFormData({
       ...formData,
-      [name]: value
+      [name]: value,
     });
     setErrors({
       ...errors,
-      [name]: ""
+      [name]: "",
     });
   };
 
@@ -89,7 +93,9 @@ const ContactUs = () => {
         {successMessage && <p className="success-message">{successMessage}</p>}
         <form onSubmit={handleSubmit}>
           <div className="mb-3">
-            <label htmlFor="name" className="form-label">Name</label>
+            <label htmlFor="name" className="form-label">
+              Name
+            </label>
             <input
               type="text"
               className="form-control"
@@ -99,10 +105,14 @@ const ContactUs = () => {
               onChange={handleInputChange}
               required
             />
-            {errors.name && <div className="invalid-feedback">{errors.name}</div>}
+            {errors.name && (
+              <div className="invalid-feedback">{errors.name}</div>
+            )}
           </div>
           <div className="mb-3">
-            <label htmlFor="email" className="form-label">Email</label>
+            <label htmlFor="email" className="form-label">
+              Email
+            </label>
             <input
               type="email"
               className="form-control"
@@ -112,10 +122,14 @@ const ContactUs = () => {
               onChange={handleInputChange}
               required
             />
-            {errors.email && <div className="invalid-feedback">{errors.email}</div>}
+            {errors.email && (
+              <div className="invalid-feedback">{errors.email}</div>
+            )}
           </div>
           <div className="mb-3">
-            <label htmlFor="message" className="form-label">Message</label>
+            <label htmlFor="message" className="form-label">
+              Message
+            </label>
             <textarea
               className="form-control message-textarea"
               id="message"
@@ -125,16 +139,26 @@ const ContactUs = () => {
               onChange={handleInputChange}
               required
             ></textarea>
-            {errors.message && <div className="invalid-feedback">{errors.message}</div>}
+            {errors.message && (
+              <div className="invalid-feedback">{errors.message}</div>
+            )}
           </div>
-          <button type="submit" className="btn btn-send">Send Message</button>
+          <button type="submit" className="btn btn-send">
+            Send Message
+          </button>
         </form>
         <div className="follow-us">
           <h3>Follow Us</h3>
           <div className="social-icons">
-            <a href="https://github.com"><FontAwesomeIcon icon={faGithub} /></a>
-            <a href="https://twitter.com"><FontAwesomeIcon icon={faTwitter} /></a>
-            <a href="https://facebook.com"><FontAwesomeIcon icon={faFacebook} /></a>
+            <a href="https://github.com">
+              <FontAwesomeIcon icon={faGithub} />
+            </a>
+            <a href="https://twitter.com">
+              <FontAwesomeIcon icon={faTwitter} />
+            </a>
+            <a href="https://facebook.com">
+              <FontAwesomeIcon icon={faFacebook} />
+            </a>
           </div>
         </div>
       </div>

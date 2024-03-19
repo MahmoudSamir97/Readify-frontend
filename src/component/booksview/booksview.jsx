@@ -1,15 +1,15 @@
-import React from 'react';
-import './booksview.css';
-import { Link } from 'react-router-dom';
-import { motion } from 'framer-motion'; // Import motion for animation
-import { useInView } from 'react-intersection-observer';
+import React from "react";
+import "./booksview.css";
+import { Link } from "react-router-dom";
+import { motion } from "framer-motion"; // Import motion for animation
+import { useInView } from "react-intersection-observer";
 
 // Import images
-import book1Image from './../../images/new1.jpg';
-import book2Image from './../../images/new2.jpg';
-import book3Image from './../../images/new3.jpg';
-import book4Image from './../../images/new1.jpg';
-import book5Image from './../../images/new2.jpg';
+import book1Image from "./../../assets/images/new1.jpg";
+import book2Image from "./../../assets/images/new2.jpg";
+import book3Image from "./../../assets/images/new3.jpg";
+import book4Image from "./../../assets/images/new1.jpg";
+import book5Image from "./../../assets/images/new2.jpg";
 
 const BooksView = ({ books }) => {
   // Define image URLs
@@ -23,11 +23,18 @@ const BooksView = ({ books }) => {
       <div className="container" id="Scicence">
         <div className="row-reverse">
           <div className="col-md-12">
-            <h2>Most <b>Rated Books</b></h2>
+            <h2>
+              Most <b>Rated Books</b>
+            </h2>
           </div>
           <div className="books">
             {limitedBooks.map((book, index) => (
-              <BookItem key={book.id} book={book} index={index} images={images} />
+              <BookItem
+                key={book.id}
+                book={book}
+                index={index}
+                images={images}
+              />
             ))}
           </div>
         </div>
@@ -53,9 +60,20 @@ const BookItem = ({ book, index, images }) => {
       whileHover={{ scale: 1.1, zIndex: 1 }} // Increase size and move to front on hover
     >
       <Link to={`./bookdetails/${book.id}`}>
-        <img src={images[index % images.length]} alt={`book-${index}`} loading="lazy" />
+        <img
+          src={images[index % images.length]}
+          alt={`book-${index}`}
+          loading="lazy"
+        />
       </Link>
-      
+      <div className="thumb-content">
+        <h5>{book.name}</h5>
+        <p className="item-price">
+          <strike>{book.price}</strike> <span> 25%</span>
+        </p>
+        <p className="book-description">{book.description}</p>{" "}
+        {/* Display book description */}
+      </div>
     </motion.div>
   );
 };

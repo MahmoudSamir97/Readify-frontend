@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import "./shoppingcart.css";
-import images from "./../../images";
+import images from "../../assets/images";
 import Books from "../db";
 import { Link } from "react-router-dom";
 
@@ -31,7 +31,7 @@ const ShoppingCart = ({ onIncrement, onDecrement, onDelete }) => {
               <h2>
                 Shopping<b> Cart {`(${cartBook.length})`}</b>
               </h2>
-              
+
               <div className="container">
                 <div className="row">
                   <div className="col-md-12 col-sm-4">
@@ -86,7 +86,9 @@ const ShoppingCart = ({ onIncrement, onDecrement, onDelete }) => {
               </div>
             </div>
           </div>
-          <div className="card col-md-4 mx-auto"> {/* Adjusted col-md-4 */}
+          <div className="card col-md-4 mx-auto">
+            {" "}
+            {/* Adjusted col-md-4 */}
             <div className="card-header">
               <h6 className="card-text">Cart Summary</h6>
             </div>

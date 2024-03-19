@@ -5,9 +5,9 @@ import "./newbooks.css";
 import { useInView } from "react-intersection-observer";
 
 // Import images
-import book1Image from "./../../images/new1.jpg";
-import book2Image from "./../../images/new2.jpg";
-import book3Image from "./../../images/new3.jpg";
+import book1Image from "./../../assets/images/new1.jpg";
+import book2Image from "./../../assets/images/new2.jpg";
+import book3Image from "./../../assets/images/new3.jpg";
 
 const NewBooks = ({ books }) => {
   const { ref, inView } = useInView({
