@@ -130,11 +130,11 @@ const ShoppingCart = ({ onIncrement, onDecrement, onDelete }) => {
                   <h6>Total</h6>
                   <h6>{total + 10}$</h6>
                 </div>
-                <Link to="/payments">
-                  <button className="btn btn-block btn-warning custom-btn">
-                    Proceed To Checkout
-                  </button>
-                </Link>
+                {/* <Link> */}
+                <button className="btn btn-block btn-warning custom-btn text-white">
+                  Proceed To Checkout
+                </button>
+                {/* </Link> */}
               </div>
             </div>
           </div>

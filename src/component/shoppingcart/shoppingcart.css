@@ -7,7 +7,6 @@
 
 body {
   background: #eee;
- 
 }
 
 .product-details {
@@ -108,7 +107,7 @@ body {
   padding: 0;
   margin-top: 40px;
   max-height: 290px;
-  width: 300px; 
+  width: 300px;
 }
 
 .card h6 {
