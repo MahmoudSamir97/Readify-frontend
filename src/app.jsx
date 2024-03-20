@@ -157,7 +157,7 @@ const App = () => {
           }
         />
 
-        <Route path="/payments" element={<PaymentForm />} />
+       
         <Route path="/signin" element={<SignInSignUpForm />} />
         <Route path="/profile" element={<BasicStack />} />
         <Route path="/reset" element={<ResetPasswordForm />} />
