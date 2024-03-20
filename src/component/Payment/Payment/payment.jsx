@@ -5,16 +5,16 @@ import { motion } from 'framer-motion';
 export default function PaymentForm() {
   return (
     <Container>
-      <h4 className="mb-3">Payment Details</h4>
+      <h4 className="mb-3" style={{ fontWeight: '900', color: '#d8cbbb', fontSize: '2rem' , textAlign: 'center'  }}>Payment Details</h4>
       <Form>
         <Row className="mb-3">
           <Col md={6}>
             <Form.Group controlId="firstName">
-              <Form.Label>First Name</Form.Label>
+              <Form.Label style={{ fontWeight: 'bold', color: '#333', fontSize: '1rem' }}>First Name</Form.Label>
               <motion.div
-                whileHover={{ scale: 1.05, borderRadius: '20px' }}
-                whileTap={{ scale: 0.95 }}
-                transition={{ duration: 0.3 }}
+                whileHover={{ scale: 1.03, boxShadow: "0px 0px 8px rgba(0, 0, 0, 0.2)", borderRadius: '20px' }}
+                whileTap={{ scale: 0.97 }}
+                transition={{ duration: 0.2 }}
               >
                 <Form.Control required type="text" placeholder="First Name" />
               </motion.div>
@@ -22,11 +22,11 @@ export default function PaymentForm() {
           </Col>
           <Col md={6}>
             <Form.Group controlId="lastName">
-              <Form.Label>Last Name</Form.Label>
+              <Form.Label style={{ fontWeight: 'bold', color: '#333', fontSize: '1rem' }}>Last Name</Form.Label>
               <motion.div
-                whileHover={{ scale: 1.05, borderRadius: '20px' }}
-                whileTap={{ scale: 0.95 }}
-                transition={{ duration: 0.3 }}
+                whileHover={{ scale: 1.03, boxShadow: "0px 0px 8px rgba(0, 0, 0, 0.2)", borderRadius: '20px' }}
+                whileTap={{ scale: 0.97 }}
+                transition={{ duration: 0.2 }}
               >
                 <Form.Control required type="text" placeholder="Last Name" />
               </motion.div>
@@ -34,56 +34,34 @@ export default function PaymentForm() {
           </Col>
         </Row>
 
-        <Form.Group className="mb-3" controlId="phone">
-          <Form.Label>Phone</Form.Label>
-          <motion.div
-            whileHover={{ scale: 1.05, borderRadius: '20px' }}
-            whileTap={{ scale: 0.95 }}
-            transition={{ duration: 0.3 }}
-          >
-            <Form.Control required type="text" placeholder="Phone" />
-          </motion.div>
-        </Form.Group>
-
-        <Form.Group className="mb-3" controlId="address">
-          <Form.Label>Address</Form.Label>
-          <motion.div
-            whileHover={{ scale: 1.05, borderRadius: '20px' }}
-            whileTap={{ scale: 0.95 }}
-            transition={{ duration: 0.3 }}
-          >
-            <Form.Control required type="text" placeholder="Address" />
-          </motion.div>
-        </Form.Group>
-
         <Form.Group className="mb-3" controlId="CardNumber">
-          <Form.Label>Card Number</Form.Label>
+          <Form.Label style={{ fontWeight: 'bold', color: '#333', fontSize: '1rem' }}>Card Number</Form.Label>
           <motion.div
-            whileHover={{ scale: 1.05, borderRadius: '20px' }}
-            whileTap={{ scale: 0.95 }}
-            transition={{ duration: 0.3 }}
+            whileHover={{ scale: 1.03, boxShadow: "0px 0px 8px rgba(0, 0, 0, 0.2)", borderRadius: '20px' }}
+            whileTap={{ scale: 0.97 }}
+            transition={{ duration: 0.2 }}
           >
             <Form.Control required type="text" placeholder="Card Number" />
           </motion.div>
         </Form.Group>
 
         <Form.Group className="mb-3" controlId="cvv">
-          <Form.Label>CVV</Form.Label>
+          <Form.Label style={{ fontWeight: 'bold', color: '#333', fontSize: '1rem' }}>CVV</Form.Label>
           <motion.div
-            whileHover={{ scale: 1.05, borderRadius: '20px' }}
-            whileTap={{ scale: 0.95 }}
-            transition={{ duration: 0.3 }}
+            whileHover={{ scale: 1.03, boxShadow: "0px 0px 8px rgba(0, 0, 0, 0.2)", borderRadius: '20px' }}
+            whileTap={{ scale: 0.97 }}
+            transition={{ duration: 0.2 }}
           >
             <Form.Control required type="text" placeholder="CVV" />
           </motion.div>
         </Form.Group>
 
         <Form.Group className="mb-3" controlId="endDate">
-          <Form.Label>End Date</Form.Label>
+          <Form.Label style={{ fontWeight: 'bold', color: '#333', fontSize: '1rem' }}>End Date</Form.Label>
           <motion.div
-            whileHover={{ scale: 1.05, borderRadius: '20px' }}
-            whileTap={{ scale: 0.95 }}
-            transition={{ duration: 0.3 }}
+            whileHover={{ scale: 1.03, boxShadow: "0px 0px 8px rgba(0, 0, 0, 0.2)", borderRadius: '20px' }}
+            whileTap={{ scale: 0.97 }}
+            transition={{ duration: 0.2 }}
           >
             <Form.Control required type="text" placeholder="End Date" />
           </motion.div>
@@ -92,11 +70,11 @@ export default function PaymentForm() {
         <Row className="mb-3">
           <Col md={6}>
             <Form.Group controlId="city">
-              <Form.Label>City</Form.Label>
+              <Form.Label style={{ fontWeight: 'bold', color: '#333', fontSize: '1rem' }}>City</Form.Label>
               <motion.div
-                whileHover={{ scale: 1.05, borderRadius: '20px' }}
-                whileTap={{ scale: 0.95 }}
-                transition={{ duration: 0.3 }}
+                whileHover={{ scale: 1.03, boxShadow: "0px 0px 8px rgba(0, 0, 0, 0.2)", borderRadius: '20px' }}
+                whileTap={{ scale: 0.97 }}
+                transition={{ duration: 0.2 }}
               >
                 <Form.Control required type="text" placeholder="City" />
               </motion.div>
@@ -104,11 +82,11 @@ export default function PaymentForm() {
           </Col>
           <Col md={3}>
             <Form.Group controlId="state">
-              <Form.Label>State</Form.Label>
+              <Form.Label style={{ fontWeight: 'bold', color: '#333', fontSize: '1rem' }}>State</Form.Label>
               <motion.div
-                whileHover={{ scale: 1.05, borderRadius: '20px' }}
-                whileTap={{ scale: 0.95 }}
-                transition={{ duration: 0.3 }}
+                whileHover={{ scale: 1.03, boxShadow: "0px 0px 8px rgba(0, 0, 0, 0.2)", borderRadius: '20px' }}
+                whileTap={{ scale: 0.97 }}
+                transition={{ duration: 0.2 }}
               >
                 <Form.Control type="text" placeholder="State" />
               </motion.div>
@@ -116,11 +94,11 @@ export default function PaymentForm() {
           </Col>
           <Col md={3}>
             <Form.Group controlId="zip">
-              <Form.Label>Zip / Postal code</Form.Label>
+              <Form.Label style={{ fontWeight: 'bold', color: '#333', fontSize: '1rem' }}>Zip / Postal code</Form.Label>
               <motion.div
-                whileHover={{ scale: 1.05, borderRadius: '20px' }}
-                whileTap={{ scale: 0.95 }}
-                transition={{ duration: 0.3 }}
+                whileHover={{ scale: 1.03, boxShadow: "0px 0px 8px rgba(0, 0, 0, 0.2)", borderRadius: '20px' }}
+                whileTap={{ scale: 0.97 }}
+                transition={{ duration: 0.2 }}
               >
                 <Form.Control required type="text" placeholder="Zip / Postal Code" />
               </motion.div>
@@ -129,16 +107,16 @@ export default function PaymentForm() {
         </Row>
 
         <motion.div
-          whileHover={{ scale: 1.05 }}
+          whileHover={{ scale: 1.05, boxShadow: "0px 0px 12px rgba(0, 0, 0, 0.2)" }}
           whileTap={{ scale: 0.95 }}
-          transition={{ duration: 0.3 }}
+          transition={{ duration: 0.2 }}
         >
           <Button
             variant="primary"
             type="submit"
             className="w-100"
             style={{
-              background: 'linear-gradient(to right, #FFD700, #FFA500)',
+              background: 'linear-gradient(to right, #d8cbbb, #00DBDE)',
               border: 'none',
             }}
           >
