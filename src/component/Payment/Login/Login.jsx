@@ -3,7 +3,7 @@ import { motion } from 'framer-motion';
 import { Container, Row, Col, Form, Button } from 'react-bootstrap';
 import logimage from './imgs/log.svg';
 import register from './imgs/register.svg';
-
+import { Link } from 'react-router-dom';
 const SignInSignUpForm = () => {
   const [isSignUp, setIsSignUp] = useState(false);
 
@@ -60,6 +60,7 @@ const SignInSignUpForm = () => {
                 </Form.Group>
                 <Form.Group className="mb-3">
                   <Form.Control type="password" placeholder="Password" />
+                  
                 </Form.Group>
                 {isSignUp && (
                   <>
@@ -75,14 +76,26 @@ const SignInSignUpForm = () => {
                     <Button variant="secondary" type="submit" className="w-100">
                       Sign Up
                     </Button>
+
                   </>
                 )}
                 {!isSignUp && (
                   <Button variant="secondary" type="submit" className="w-100">
                     Sign In
                   </Button>
+                  
+                  
                 )}
+
+<Link to="/reset">
+  <Button style={{ marginTop: '1rem' }} variant="secondary" type="submit" className="w-100">
+    Reset Your Password
+  </Button>
+</Link>
+
+
               </Form>
+              
               <Button
                 variant="link"
                 onClick={() => setIsSignUp(!isSignUp)}
@@ -91,6 +104,7 @@ const SignInSignUpForm = () => {
                 {isSignUp ? "Already have an account? Sign In" : "Don't have an account? Sign Up"}
               </Button>
             </motion.div>
+            
           </Col>
         </Row>
       </Container>

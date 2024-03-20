@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, useLocation } from "react-router-dom";
 import AddNewItem from "./component/addnewitem/addnewitem";
 import Admin from "./component/admin/admin";
 import Edit from "./component/edit/edit";
@@ -16,9 +16,13 @@ import Footer from "./component/footer/footer";
 import AboutUs from "./component/aboutus/aboutus";
 import PaymentForm from "./component/Payment/Payment/payment";
 import SignInSignUpForm from "./component/Payment/Login/Login";
-import BasicStack from "./component/Payment/userinfo";
 import Profile from "./component/Payment/profile";
 import Chat from "./pages/Chat";
+import ResetPasswordForm from "./component/Payment/Login/reset";
+import ChangePasswordreset from './component/Payment/Login/confirm'
+import ChangePasswordForm from "./component/Payment/Login/setting";
+import BasicStack from "./component/Payment/userinfo"
+
 const App = () => {
   const [books, setBooks] = useState(Books);
   const [user, setUser] = useState("");
@@ -82,7 +86,7 @@ const App = () => {
     //
     setBooks(books);
   };
-
+  const location = useLocation();
   return (
     <React.Fragment>
       <Navbar books={books} user={user} setUser={setUser} />
@@ -155,7 +159,11 @@ const App = () => {
 
         <Route path="/payments" element={<PaymentForm />} />
         <Route path="/signin" element={<SignInSignUpForm />} />
-        <Route path="/profile" element={<Profile />} />
+        <Route path="/profile" element={<BasicStack />} />
+        <Route path="/reset" element={<ResetPasswordForm />} />
+<Route path="/setting" element={<ChangePasswordForm />} />
+<Route path="/resetpassword" element={<ChangePasswordreset />} />
+
       </Routes>
 
       <Footer />
