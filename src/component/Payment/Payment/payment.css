@@ -1,9 +1,0 @@
-.payment-form-wrapper {
-    max-width: 400px; /* Adjust the maximum width as needed */
-    margin: auto; /* Center the form horizontally */
-  }
-  
-  .payment-form-wrapper .form-control {
-    font-size: 14px; /* Decrease font size of form controls */
-  }
-  

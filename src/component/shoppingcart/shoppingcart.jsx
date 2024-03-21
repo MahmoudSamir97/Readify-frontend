@@ -6,8 +6,22 @@ import "./shoppingcart.css";
 import images from "../../assets/images";
 import Books from "../db";
 import { Link } from "react-router-dom";
+import PayButton from "../PayButton/PayButton";
 
-const ShoppingCart = ({ onIncrement, onDecrement, onDelete }) => {
+const ShoppingCart = ({ onDelete }) => {
+  const items = [
+    {
+      name: "Science fiction book",
+      price: 2,
+      image:
+        "https://www.worldatlas.com/r/w960-q80/upload/3b/05/33/shutterstock-466404632.jpg",
+    },
+    {
+      name: "Agatha kristy, horror",
+      price: 4,
+      image: "https://images4.penguinrandomhouse.com/cover/9780525565109",
+    },
+  ];
   const [cartBook, setCartBook] = useState([]);
   const [total, setTotal] = useState();
 
@@ -115,26 +129,12 @@ const ShoppingCart = ({ onIncrement, onDecrement, onDelete }) => {
               <div className="card-header">
                 <h6 className="card-text">Cart Summary</h6>
               </div>
-              <div className="card-body">
-                <div className="d-flex justify-content-between pt-1">
-                  <h6>Subtotal</h6>
-                  <h6>{total}$</h6>
-                </div>
-                <div className="d-flex justify-content-between">
-                  <h6>Shipping</h6>
-                  <h6>10$</h6>
-                </div>
-              </div>
               <div className="card-footer border-secondary bg-transparent">
                 <div className="d-flex justify-content-between">
                   <h6>Total</h6>
-                  <h6>{total + 10}$</h6>
+                  <h6>{total}$</h6>
                 </div>
-                {/* <Link> */}
-                <button className="btn btn-block btn-warning custom-btn text-white">
-                  Proceed To Checkout
-                </button>
-                {/* </Link> */}
+                <PayButton cartItems={items}>Checkout</PayButton>
               </div>
             </div>
           </div>

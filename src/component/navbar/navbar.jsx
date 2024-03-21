@@ -1,17 +1,40 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { NavLink, Link } from "react-router-dom";
 import "./navbar.css";
 import Books from "../db";
-import User from "../user/user";
+// import User from "../user/user";
 import useSticky from "./useSticky";
 import logo from "./../../assets/images/icons8-book-48.png";
-import chatlogo from "./../../assets/images/chat-logo.png";
+// dropdown images
+import userImg from "./../../assets/images/dropdown/user.png";
+import edit from "./../../assets/images/dropdown/edit.png";
+import settings from "./../../assets/images/dropdown/settings.png";
+import help from "./../../assets/images/dropdown/question.png";
+import logout from "./../../assets/images/dropdown/log-out.png";
+import DropDown from "../DropDown/DropDown";
+//
 
 const Navbar = ({ user, setUser }) => {
   const [cartnum, setCartNum] = useState([]);
   const [wishcount, setWishCount] = useState();
-
   const { sticky, stickyRef } = useSticky();
+  const [open, setOpen] = useState(false);
+
+  let menuRef = useRef();
+
+  useEffect(() => {
+    let handler = (e) => {
+      if (!menuRef.current.contains(e.target)) {
+        setOpen(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handler);
+
+    return () => {
+      document.removeEventListener("mousedown", handler);
+    };
+  });
 
   useEffect(() => {
     const cartBooks = Books.filter((element) => element.isInCart === true);
@@ -88,18 +111,8 @@ const Navbar = ({ user, setUser }) => {
                       </Link>
                     </li>
                     <li className="nav-item mx-lg-4">
-                      <Link
-                        className={wishcount > 0 ? "nav-link" : "nav-link"}
-                        to={"/wishlist"}
-                      >
-                        {" "}
-                        <i
-                          className={
-                            wishcount > 0
-                              ? "fas fa-heart text-danger"
-                              : "far fa-heart"
-                          }
-                        ></i>
+                      <Link className="nav-link" to={"/login"}>
+                        Login
                       </Link>
                     </li>
                   </>
@@ -109,7 +122,7 @@ const Navbar = ({ user, setUser }) => {
 
             <div className="d-flex">
               <NavLink
-                className="nav-icon position-relative text-decoration-none me-3"
+                className="nav-icon position-relative mt-2 text-decoration-none ms-3"
                 to={"./shoppingcart"}
               >
                 <i className="fa fa-fw fa-cart-arrow-down text-dark" />
@@ -117,54 +130,50 @@ const Navbar = ({ user, setUser }) => {
                   {cartnum.length}
                 </span>
               </NavLink>
-
-              <div className="dropdown">
-                <button
-                  className="btn dropdown-toggle"
-                  type="button"
-                  id="dropdownMenuButton"
-                  data-bs-toggle="dropdown"
-                  aria-expanded="false"
+              <NavLink
+                className={`${
+                  wishcount > 0 ? "nav-link " : "nav-link "
+                } wishlink`}
+                to={"/wishlist"}
+              >
+                <i
+                  className={
+                    wishcount > 0 ? "fas fa-heart text-danger" : "far fa-heart"
+                  }
+                ></i>
+              </NavLink>
+              {/* drop down here */}
+              <div className="menu-container" ref={menuRef}>
+                <div
+                  className="menu-trigger"
+                  onClick={() => {
+                    setOpen(!open);
+                  }}
                 >
-                  <img src="/path_to_dropdown_icon" alt="Dropdown" />
-                </button>
-                <ul
-                  className="dropdown-menu"
-                  aria-labelledby="dropdownMenuButton"
-                >
-                  <li>
-                    <a className="dropdown-item" href="#">
-                      Settings
-                    </a>
-                  </li>
-                  <Link to="./profile">
-                    "{" "}
-                    <li>
-                      <a className="dropdown-item" href="#">
-                        Profile
-                      </a>
-                    </li>{" "}
-                  </Link>
-                  <li>
-                    <a className="dropdown-item" href="#">
-                      Logout
-                    </a>
-                  </li>
-                </ul>
-              </div>
+                  <img src={userImg} alt="user" />
+                </div>
 
-              <div>
-                {user ? (
-                  <User user={user} setUser={setUser} />
-                ) : (
-                  <NavLink
-                    className="nav-icon position-relative text-decoration-none"
-                    to={"./signin"}
-                  >
-                    <i className="fa fa-fw fa-user text-dark" />
-                  </NavLink>
-                )}
+                <div
+                  className={`dropdown-menu ${open ? "active" : "inactive"}`}
+                >
+                  <h3 className="dropdown-title">Mahmoudsamir</h3>
+                  <ul className="dropdown-list">
+                    <DropDown
+                      img={edit}
+                      text={"Edit Profile"}
+                      link={"/edit-profile"}
+                    />
+                    <DropDown
+                      img={settings}
+                      text={"Password"}
+                      link={"/change-password"}
+                    />
+                    <DropDown img={help} text={"Helps"} link={"/helps"} />
+                    <DropDown img={logout} text={"Logout"} link={"/login"} />
+                  </ul>
+                </div>
               </div>
+              {/* drop down here */}
             </div>
           </div>
         </div>

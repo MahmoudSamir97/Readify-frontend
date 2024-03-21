@@ -114,12 +114,6 @@ body {
   font-size: 14px;
 }
 
-.card button {
-  font-size: 12px;
-  margin-top: 20px;
-  background-color: #af460f;
-}
-
 @media screen and (min-width: 300px) and (max-width: 600px) {
   .tablecart {
     width: 400px;

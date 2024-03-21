@@ -1,16 +1,16 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
 import { Container, Row, Col, Form, Button } from "react-bootstrap";
-import logimage from "./imgs/log.svg";
-import registerImage from "./imgs/register.svg";
-import { useSignupUserMutation } from "../../../services/appApi";
+// import logimage from "./imgs/log.svg";
+// import registerImage from "./imgs/register.svg";
+// import { useSignupUserMutation } from "../../../services/appApi";
 import { useFormik } from "formik";
 import axios from "axios";
 import * as Yup from "yup";
 
 const SignInSignUpForm = () => {
   const [isSignUp, setIsSignUp] = useState(false);
-  const [signupUser, { isloading, error }] = useSignupUserMutation();
+  // const [signupUser, { isloading, error }] = useSignupUserMutation();
 
   // Motion variants for container
   const containerVariants = {
@@ -63,15 +63,9 @@ const SignInSignUpForm = () => {
   });
   async function register(value) {
     console.log(value);
-    await axios.post(
-      "https://shop-easy-backend.onrender.com/auth/signup",
-      value
-    );
+    const res = await axios.post("http://127.0.0.1:4000/auth/signup", value);
+    console.log(res);
   }
-
-  const handleSignup = (e) => {
-    e.preventDefault();
-  };
 
   return (
     <motion.div
@@ -84,14 +78,14 @@ const SignInSignUpForm = () => {
       <Container>
         <Row className="justify-content-center align-items-center">
           <Col md={6} className="text-center mb-5">
-            <motion.img
+            {/* <motion.img
               src={isSignUp ? registerImage : logimage}
               alt="Log"
               initial={{ y: -100, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
               transition={{ delay: 0.2 }}
               className="img-fluid"
-            />
+            /> */}
           </Col>
           <Col md={6}>
             <motion.div
@@ -116,29 +110,46 @@ const SignInSignUpForm = () => {
                       />
                       {registerForm.errors.firstName &&
                       registerForm.touched.firstName ? (
-                        <div className="alert alert-danger p-2">
+                        <Form.Text className="alert-danger p-2">
                           {registerForm.errors.firstName}
-                        </div>
+                        </Form.Text>
                       ) : null}
                     </Form.Group>
                     <Form.Group className="mb-3">
-                      <Form.Control type="text" placeholder="Last Name" />
+                      <Form.Control
+                        type="text"
+                        placeholder="Last Name"
+                        name="lasttName"
+                        id="lastName"
+                      />
                     </Form.Group>
                     <Form.Group className="mb-3">
-                      <Form.Control type="text" placeholder="firstName" />
+                      <Form.Control
+                        type="text"
+                        placeholder="userName"
+                        name="userName"
+                        id="userName"
+                      />
                     </Form.Group>
                   </>
                 )}
                 <Form.Group className="mb-3">
-                  <Form.Control type="email" placeholder="Email" />
+                  <Form.Control
+                    type="email"
+                    placeholder="Email"
+                    name="email"
+                    id="email"
+                  />
                 </Form.Group>
                 <Form.Group className="mb-3">
                   <Form.Control
                     type="password"
                     placeholder="Password"
-                    value={registerForm.values.firstName}
-                    onChange={registerForm.handleChange}
-                    onBlur={registerForm.handleBlur}
+                    // value={registerForm.values.firstName}
+                    // onChange={registerForm.handleChange}
+                    // onBlur={registerForm.handleBlur}
+                    name="password"
+                    id="password"
                   />
                 </Form.Group>
                 {isSignUp && (
@@ -147,13 +158,25 @@ const SignInSignUpForm = () => {
                       <Form.Control
                         type="password"
                         placeholder="Confirm Password"
+                        name="repeatedPassword"
+                        id="repeatedPassword"
                       />
                     </Form.Group>
                     <Form.Group className="mb-3">
-                      <Form.Control type="tel" placeholder="Phone Number" />
+                      <Form.Control
+                        type="tel"
+                        placeholder="Phone Number"
+                        name="phoneNumber"
+                        id="phoneNumber"
+                      />
                     </Form.Group>
                     <Form.Group className="mb-3">
-                      <Form.Control type="date" placeholder="Birthdate" />
+                      <Form.Control
+                        type="date"
+                        placeholder="Birthdate"
+                        name="dateOfBirth"
+                        id="dateOfBirth"
+                      />
                     </Form.Group>
                     <Button variant="secondary" type="submit" className="w-100">
                       Sign Up

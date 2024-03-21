@@ -14,21 +14,20 @@ import Wishlist from "./component/wishlist/wishilst";
 import RatingForm from "./component/ratingform/ratingform";
 import Footer from "./component/footer/footer";
 import AboutUs from "./component/aboutus/aboutus";
-import PaymentForm from "./component/Payment/Payment/payment";
 import SignInSignUpForm from "./component/Payment/Login/Login";
-import BasicStack from "./component/Payment/userinfo";
 import Profile from "./component/Payment/profile";
 import Chat from "./pages/Chat";
+import Register from "./component/Register/Register";
+import Login from "./component/Login/Login";
+import ForgetPassword from "./component/ForgetPassword/ForgetPassword";
+import ResetPassword from "./component/ResetPassword/ResetPassword";
+import CheckoutSuccess from "./component/CheckoutSuccess/CheckoutSuccess";
+import EditProfile from "./component/EditProfile/EditProfile";
+import ChangePassword from "./component/ChangePassword/ChangePassword";
+import Helps from "./component/Helps/Helps";
 const App = () => {
   const [books, setBooks] = useState(Books);
   const [user, setUser] = useState("");
-
-  // useEffect(() => {
-  //   const timeout = setTimeout(() => {
-  //     setBooks(Books);
-  //   }, 1200);
-  //   return () => clearTimeout(timeout)
-  // }, []);
 
   const onWishlist = (book) => {
     //edit
@@ -41,8 +40,6 @@ const App = () => {
     book.isInCart = true;
     book.count++;
     setBooks([...books], books);
-
-    // handleSubmit(book);
   };
 
   const handleRemoveItem = async (book) => {
@@ -86,10 +83,8 @@ const App = () => {
   return (
     <React.Fragment>
       <Navbar books={books} user={user} setUser={setUser} />
-
       <Routes>
         <Route path="/" element={<HomePage onSave={onCart} books={books} />} />
-
         <Route path="/admin" element={<Admin />} />
         <Route path="/aboutus" element={<AboutUs />} />
         <Route path="/contact" element={<ContactUs />} />
@@ -98,7 +93,6 @@ const App = () => {
           path="/admin/edit"
           element={<Edit books={books} onDelete={handleDelete} />}
         />
-
         <Route path="/allbooks" books element={<AllBooks books={books} />} />
         <Route
           path="/admin/addnewitem"
@@ -152,12 +146,18 @@ const App = () => {
             />
           }
         />
-
-        <Route path="/payments" element={<PaymentForm />} />
+        <Route path="/checkout-success" element={<CheckoutSuccess />} />
         <Route path="/signin" element={<SignInSignUpForm />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
         <Route path="/profile" element={<Profile />} />
+        <Route path="/edit-profile" element={<EditProfile />} />
+        <Route path="/change-password" element={<ChangePassword />} />
+        <Route path="/helps" element={<Helps />} />
+        <Route path="/home" element={<HomePage />} />
+        <Route path="/forget-password" element={<ForgetPassword />} />
+        <Route path="/reset-password/:resetLink" element={<ResetPassword />} />
       </Routes>
-
       <Footer />
     </React.Fragment>
   );
