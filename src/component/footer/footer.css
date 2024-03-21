@@ -1,14 +1,10 @@
-footer {
-  display: inline-block;
-  position: static;
-  width: 100%;
-  padding-top: 40px;
-  bottom: 0;
-  background-color: #d8cbbb;
-}
 .footer {
+  /* display: inline-block; */
+  /* position: static; */
+  /* width: 100%; */
+  padding-top: 40px;
+  /* bottom: 0; */
   background-color: #d8cbbb;
-  padding: 50px 0;
 }
 
 .footer h5 {
