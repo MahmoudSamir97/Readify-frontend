@@ -28,6 +28,7 @@ import Helps from "./component/Helps/Helps";
 const App = () => {
   const [books, setBooks] = useState(Books);
   const [user, setUser] = useState("");
+  const token = localStorage.getItem("token");
 
   const onWishlist = (book) => {
     //edit
@@ -81,7 +82,7 @@ const App = () => {
   };
 
   return (
-    <React.Fragment>
+    <>
       <Navbar books={books} user={user} setUser={setUser} />
       <Routes>
         <Route path="/" element={<HomePage onSave={onCart} books={books} />} />
@@ -159,7 +160,7 @@ const App = () => {
         <Route path="/reset-password/:resetLink" element={<ResetPassword />} />
       </Routes>
       <Footer />
-    </React.Fragment>
+    </>
   );
 };
 

@@ -10,6 +10,7 @@ import book2Image from "./../../assets/images/new2.jpg";
 import book3Image from "./../../assets/images/new3.jpg";
 
 const NewBooks = ({ books }) => {
+  console.log(books);
   const { ref, inView } = useInView({
     threshold: 0.5, // Trigger the animation when 50% of the section is visible
     triggerOnce: true, // Only trigger the animation once
@@ -33,7 +34,7 @@ const NewBooks = ({ books }) => {
     return stars;
   };
 
-  const limitedBooks = books.slice(0, 3); // Slice the first 3 books
+  // const limitedBooks = books.slice(0, 3); // Slice the first 3 books
 
   // Define image URLs
   const images = [book1Image, book2Image, book3Image];
@@ -48,7 +49,7 @@ const NewBooks = ({ books }) => {
                 Most <b>Rated Books</b>
               </h2>
               <motion.div className="inner-carousel">
-                {limitedBooks.map((book, index) => (
+                {/* {limitedBooks.map((book, index) => (
                   <motion.div
                     className="item"
                     key={index}
@@ -79,7 +80,7 @@ const NewBooks = ({ books }) => {
                       </div>
                     </div>
                   </motion.div>
-                ))}
+                ))} */}
               </motion.div>
             </div>
           </div>
