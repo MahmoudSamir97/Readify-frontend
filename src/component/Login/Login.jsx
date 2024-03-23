@@ -1,27 +1,30 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useFormik } from "formik";
 import axios from "axios";
 import * as Yup from "yup";
+import { imageContext } from "../Context/ProfileImageContext";
 
 function Login() {
   let [error, setErrors] = useState(null);
+  const [profileImageSet, setProfileImageSet] = useState(false); // Track whether profile image has been set
   let navigate = useNavigate();
-  //   Schema
+  const { setProfileImage } = useContext(imageContext);
+  // Schema
   const validationSchema = Yup.object({
     email: Yup.string().email().required("required"),
   });
 
   async function signIn(value) {
     try {
-      console.log(value);
-      let { data } = await axios.post(
+      const { data } = await axios.post(
         "http://127.0.0.1:4000/auth/login",
         value
       );
-      console.log(data);
       localStorage.setItem("token", data.token);
-      navigate("/");
+      setProfileImage(data.registeredUser.image.url);
+      setProfileImageSet(true);
+      navigate("/home");
     } catch (err) {
       if (err.response && err.response.data && err.response.data.message) {
         setErrors(err.response.data.message);
@@ -41,6 +44,11 @@ function Login() {
     validationSchema: validationSchema,
     onSubmit: signIn,
   });
+  // useEffect(() => {
+  //   if (profileImageSet) {
+  //     navigate("/");
+  //   }
+  // }, [profileImageSet, navigate]);
   return (
     <form
       className="mask d-flex align-items-center  gradient-custom-3"

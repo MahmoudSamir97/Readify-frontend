@@ -1,8 +1,7 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useContext } from "react";
 import { NavLink, Link } from "react-router-dom";
 import "./navbar.css";
 import Books from "../db";
-// import User from "../user/user";
 import useSticky from "./useSticky";
 import logo from "./../../assets/images/icons8-book-48.png";
 // dropdown images
@@ -12,6 +11,7 @@ import settings from "./../../assets/images/dropdown/settings.png";
 import help from "./../../assets/images/dropdown/question.png";
 import logout from "./../../assets/images/dropdown/log-out.png";
 import DropDown from "../DropDown/DropDown";
+import { imageContext } from "../Context/ProfileImageContext";
 //
 
 const Navbar = ({ user, setUser }) => {
@@ -19,8 +19,11 @@ const Navbar = ({ user, setUser }) => {
   const [wishcount, setWishCount] = useState();
   const { sticky, stickyRef } = useSticky();
   const [open, setOpen] = useState(false);
-
+  const { profileImage } = useContext(imageContext);
   let menuRef = useRef();
+  useEffect(() => {
+    console.log(profileImage); // This will only execute once when the component mounts
+  }, [profileImage]);
 
   useEffect(() => {
     let handler = (e) => {

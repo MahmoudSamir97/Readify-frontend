@@ -16,7 +16,7 @@ const BooksView = ({ books }) => {
   const images = [book1Image, book2Image, book3Image, book4Image, book5Image];
 
   // Slice the first 5 books
-  const limitedBooks = books.slice(0, 5);
+  // const limitedBooks = books.slice(0, 5);
 
   return (
     <section className="most-books">
@@ -28,14 +28,14 @@ const BooksView = ({ books }) => {
             </h2>
           </div>
           <div className="books">
-            {limitedBooks.map((book, index) => (
+            {/* {limitedBooks.map((book, index) => (
               <BookItem
                 key={book.id}
                 book={book}
                 index={index}
                 images={images}
               />
-            ))}
+            ))} */}
           </div>
         </div>
       </div>
