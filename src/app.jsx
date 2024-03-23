@@ -26,6 +26,14 @@ import EditProfile from "./component/EditProfile/EditProfile";
 import ChangePassword from "./component/ChangePassword/ChangePassword";
 import Helps from "./component/Helps/Helps";
 const App = () => {
+  // CHAT
+  const [rooms, setRooms] = useState([]);
+  const [currentRoom, setCurrentRoom] = useState([]);
+  const [members, setMembers] = useState([]);
+  const [messages, setMessages] = useState([]);
+  const [privateMemberMsg, setPrivateMemberMsg] = useState({});
+  const [newMessages, setNewMessages] = useState({});
+  // CHAT
   const [books, setBooks] = useState(Books);
   const [user, setUser] = useState("");
   const token = localStorage.getItem("token");
