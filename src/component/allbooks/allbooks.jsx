@@ -20,13 +20,16 @@ const AllBooks = () => {
   const [allBook, setallBook] = useState([]);
 
   const [loading, setloading] = useState(false);
-
-  useEffect(async () => {
-    setloading(true);
+  async function getData() {
     const req = await axios.get("http://localhost:4000/book/AllBook");
     const res = await req.data.data.allBooks;
+    setloading(true);
     setloading(false);
     setallBook(res);
+  }
+
+  useEffect(() => {
+    getData();
   }, []);
 
   // Category
