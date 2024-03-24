@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useFormik } from "formik";
 import axios from "axios";
@@ -6,7 +6,7 @@ import * as Yup from "yup";
 import { imageContext } from "../Context/ProfileImageContext";
 
 function Login() {
-  let [error, setErrors] = useState(null);
+  let [errors, setErrors] = useState(null);
   const [profileImageSet, setProfileImageSet] = useState(false); // Track whether profile image has been set
   let navigate = useNavigate();
   const { setProfileImage } = useContext(imageContext);
@@ -26,6 +26,7 @@ function Login() {
       setProfileImageSet(true);
       navigate("/home");
     } catch (err) {
+      // });
       if (err.response && err.response.data && err.response.data.message) {
         setErrors(err.response.data.message);
       } else {
@@ -97,8 +98,8 @@ function Login() {
                   >
                     Forgot your password?
                   </Link>
-                  {error && (
-                    <div className="alert-danger p-2 mb-2">{error}</div>
+                  {errors && (
+                    <div className="alert-danger p-2 mb-2">{errors}</div>
                   )}
                   <div className="d-flex flex-direction-column justify-content-center">
                     <button

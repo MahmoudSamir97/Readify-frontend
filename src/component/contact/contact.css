@@ -1,80 +1,83 @@
 /* contact.css */
 .contact-page {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-   
-    
-    padding: 50px; /* Adjust padding as needed */
-    margin: 20px;
-  }
-  
-  .contact-content {
-    background-color: rgba(255, 255, 255, 0.8); /* Add transparency to the form background */
-    padding: 20px;
-    border-radius: 10px;
-    max-width: 800px; /* Increase the max-width of the form */
-    width: 100%; /* Make sure the form takes full width */
-  }
-  
-  .contact-content h2 {
-    text-align: center;
-  }
-  
-  .contact-content form {
-    display: flex;
-    flex-direction: column;
-  }
-  
-  .contact-content .mb-3 {
-    margin-bottom: 20px;
-  }
-  
-  .contact-content .form-label {
-    font-weight: bold;
-  }
-  
-  .contact-content .form-control {
-    width: 100%;
-    padding: 10px;
-    border-radius: 5px;
-    border: 1px solid #ccc;
-  }
-  
-  .contact-content .message-textarea {
-    height: 150px; /* Adjust the height of the textarea */
-  }
-  
-  .contact-content .btn-send {
-    width: 30%;
-    padding: 10px;
-    background-color: #e0c5b4;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-  }
-  
-  .contact-image {
-    display: none; /* Hide the image container */
-  }
-  .follow-us {
-    margin-top: 20px;
-  }
-  
-  .social-icons {
-    display: flex;
-    align-items: center;
-  }
-  
-  .social-icons a {
-    margin-right: 10px;
-    color: #000; /* Adjust the color as needed */
-    font-size: 24px;
-    text-decoration: none;
-  }
-  
-  .social-icons a:hover {
-    color: #e1cfc6; /* Change the color on hover */
-  }
-  
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  padding: 50px; /* Adjust padding as needed */
+  margin: 20px;
+}
+
+.contact-content {
+  background-color: rgba(
+    255,
+    255,
+    255,
+    0.8
+  ); /* Add transparency to the form background */
+  padding: 20px;
+  border-radius: 10px;
+  max-width: 800px; /* Increase the max-width of the form */
+  width: 100%; /* Make sure the form takes full width */
+}
+
+.contact-content h2 {
+  text-align: center;
+}
+
+.contact-content form {
+  display: flex;
+  flex-direction: column;
+}
+
+.contact-content .mb-3 {
+  margin-bottom: 20px;
+}
+
+.contact-content .form-label {
+  font-weight: bold;
+}
+
+.contact-content .form-control {
+  width: 100%;
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+
+.contact-content .message-textarea {
+  height: 150px; /* Adjust the height of the textarea */
+}
+
+.contact-content .btn-send {
+  width: 30%;
+  padding: 10px;
+  background-color: #e0c5b4;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.contact-image {
+  display: none; /* Hide the image container */
+}
+.follow-us {
+  margin-top: 20px;
+}
+
+.social-icons {
+  display: flex;
+  align-items: center;
+}
+
+.social-icons a {
+  margin-right: 10px;
+  color: #000; /* Adjust the color as needed */
+  font-size: 24px;
+  text-decoration: none;
+}
+
+.social-icons a:hover {
+  color: #e1cfc6; /* Change the color on hover */
+}

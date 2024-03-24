@@ -24,10 +24,10 @@ const ContactUs = () => {
     e.preventDefault();
     if (validateForm()) {
       try {
-        const response = await fetch('http://localhost:4000/contact', {
-          method: 'POST',
+        const response = await fetch("http://localhost:4000/contact", {
+          method: "POST",
           headers: {
-            'Content-Type': 'application/json',
+            "Content-Type": "application/json",
           },
           body: JSON.stringify({
             userName: formData.name,
@@ -35,26 +35,26 @@ const ContactUs = () => {
             message: formData.message,
           }),
         });
-        
+
         if (!response.ok) {
-          throw new Error('Failed to send message');
+          throw new Error("Failed to send message");
         }
 
         const data = await response.json();
-        console.log('Form submitted successfully!', data);
-        setSuccessMessage('Your message has been sent successfully!');
+        console.log("Form submitted successfully!", data);
+        setSuccessMessage("Your message has been sent successfully!");
         setFormData({
-          name: '',
-          email: '',
-          message: '',
+          name: "",
+          email: "",
+          message: "",
         });
         setErrors({});
       } catch (error) {
-        console.error('Error:', error);
+        console.error("Error:", error);
         // Handle error here, maybe display an error message to the user
       }
     } else {
-      console.log('Form validation failed!');
+      console.log("Form validation failed!");
     }
   };
 
@@ -109,7 +109,11 @@ const ContactUs = () => {
     <div className="contact-page">
       <div className="contact-content">
         <h2>Send Us a Message</h2>
-        {successMessage && <p className="success-message bg-success p-3 text-white w-50 rounded-3">{successMessage}</p>}
+        {successMessage && (
+          <p className="success-message bg-success p-3 text-white w-50 rounded-3">
+            {successMessage}
+          </p>
+        )}
         <form onSubmit={handleSubmit}>
           <div className="mb-3">
             <label htmlFor="name" className="form-label">
