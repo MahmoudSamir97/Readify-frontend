@@ -1,9 +1,10 @@
 import React, { useState } from "react";
 import { useParams } from "react-router-dom";
 import "./bookdetails.css";
-//import RatingForm from "./../ratingform/ratingform"; // Updated import path
 import axios from "axios";
 import { useEffect } from "react";
+
+// import { useDispatch } from "react-redux";
 
 import { addToCart } from "../../slices/cartSlice";
 
@@ -11,14 +12,24 @@ const BookDetails = () => {
   const [loading, setloading] = useState(false);
   const { id } = useParams();
 
+  // const dispatch = useDispatch();
+
   const [book, setbook] = useState("");
 
-  useEffect(async () => {
-    setloading(true);
-    const req = await axios.get(`http://localhost:4000/book/${id}`);
-    const res = await req.data.data.book;
-    setbook(res);
-    setloading(false);
+  useEffect(() => {
+    const fetchData = async () => {
+      setloading(true);
+      try {
+        const req = await axios.get(`http://localhost:4000/book/${id}`);
+        const res = req.data.data.book;
+        setbook(res);
+        setloading(false);
+      } catch (error) {
+        console.error("Error fetching book details:", error);
+        setloading(false);
+      }
+    };
+    fetchData();
   }, [id]);
 
   return (
@@ -56,7 +67,7 @@ const BookDetails = () => {
                   <div>
                     <button
                       className="btn btn-danger flex-shrink-1"
-                  
+
                       type="button"
                     >
                       Add to cart
