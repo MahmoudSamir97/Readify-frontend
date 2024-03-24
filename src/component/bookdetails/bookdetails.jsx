@@ -3,13 +3,17 @@ import { useParams } from "react-router-dom";
 import "./bookdetails.css";
 import axios from "axios";
 import { useEffect } from "react";
+
 // import { useDispatch } from "react-redux";
+
 import { addToCart } from "../../slices/cartSlice";
 
 const BookDetails = () => {
   const [loading, setloading] = useState(false);
   const { id } = useParams();
+
   // const dispatch = useDispatch();
+
   const [book, setbook] = useState("");
 
   useEffect(() => {
@@ -63,7 +67,7 @@ const BookDetails = () => {
                   <div>
                     <button
                       className="btn btn-danger flex-shrink-1"
-                      // onClick={dispatch(addToCart(book))}
+
                       type="button"
                     >
                       Add to cart
