@@ -1,5 +1,4 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import React from "react";
 import { motion } from "framer-motion";
 import "./newbooks.css";
 import { useInView } from "react-intersection-observer";
@@ -10,7 +9,7 @@ import book2Image from "./../../assets/images/new2.jpg";
 import book3Image from "./../../assets/images/new3.jpg";
 
 const NewBooks = ({ books }) => {
-  console.log(books);
+  // console.log(books);
   const { ref, inView } = useInView({
     threshold: 0.5, // Trigger the animation when 50% of the section is visible
     triggerOnce: true, // Only trigger the animation once
