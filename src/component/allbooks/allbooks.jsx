@@ -68,11 +68,11 @@ const AllBooks = () => {
               {/* end Category DropDownList Filter */}
             </div>
             <div className="col-sm-4 mb-3"></div>
-            <div className="col-sm-4 mb-3">
+            {/* <div className="col-sm-4 mb-3">
               <button className="btn btn-outline-secondary" type="button">
                 Reset
               </button>
-            </div>
+            </div> */}
           </form>
         </div>
       </section>
