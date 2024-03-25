@@ -4,14 +4,19 @@ import React from "react";
 const BACKEND_URL = "http://localhost:4000";
 
 function PayButton({ cartItems }) {
+  console.log(cartItems);
   const handleCheckout = async () => {
     try {
+      const token = localStorage.getItem("token");
+      const config = {
+        headers: { Authorization: `Bearer ${token}` },
+      };
       const res = await axios.post(
         `${BACKEND_URL}/stripe/create-checkout-session`,
         {
           cartItems,
-          userId: "65eb54a619af94c1bf635889",
-        }
+        },
+        config
       );
       if (res.data.url) {
         window.location.href = res.data.url;

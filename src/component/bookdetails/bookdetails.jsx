@@ -4,11 +4,12 @@ import "./bookdetails.css";
 import axios from "axios";
 import { useEffect, useState } from "react";
 
-
-const BookDetails = () => {
-  const [loading, setLoading] = useState(false);
+const BookDetails = (props) => {
+  console.log(props);
+  const [loading, setloading] = useState(false);
+  const [purchasedBooks, setPurchasedBooks] = useState([]);
   const { id } = useParams();
-  const [book, setBook] = useState("");
+  const [book, setbook] = useState("");
 
   useEffect(() => {
     const fetchData = async () => {
@@ -23,34 +24,47 @@ const BookDetails = () => {
         setLoading(false);
       }
     };
+    const getPurchasedItems = async () => {
+      try {
+        const token = localStorage.getItem("token");
+        const config = {
+          headers: { Authorization: `Bearer ${token}` },
+        };
+        const req = await axios.get(`http://localhost:4000/purchased`, config);
+        console.log(req);
+      } catch (error) {
+        console.error("Error fetching book details:", error);
+        setloading(false);
+      }
+    };
     fetchData();
+    getPurchasedItems();
   }, [id]);
 
-  const handleAddToWishlist = async () => {
+  const handleAddToCart = async () => {
     try {
+      console.log("first");
+      const { bookTitle, bookPrice, bookImage } = book;
+      console.log(bookTitle, bookPrice, bookImage);
+
       const token = localStorage.getItem("token");
-      if (!token) {
-        console.error("Token not found in local storage");
-        return;
-      }
-
-      const config = {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
+      const requestBody = {
+        bookTitle,
+        bookPrice,
+        bookImage: bookImage.url,
       };
-
-      const wishlistItem = { bookId: book._id }; // Assuming the book object has an _id property
-
-      const response = await axios.post(
-        "http://localhost:4000/wishlist",
-        { wishlistItems: [wishlistItem] },
+      const config = {
+        headers: { Authorization: `Bearer ${token}` },
+      };
+      const req = await axios.post(
+        `http://localhost:4000/cartcpy`,
+        requestBody,
         config
       );
-
-      console.log("Added to wishlist:", response.data);
+      console.log(req);
+      setPurchasedBooks();
     } catch (error) {
-      console.error("Error adding to wishlist:", error);
+      console.error("Error fetching book details:", error);
     }
   };
 
@@ -73,6 +87,18 @@ const BookDetails = () => {
                 <h1 className="display-5 fw-bolder">{book.bookTitle}</h1>
                 <div className="fs-5 mb-5">
                   <span className="text">{`Price : ${book.bookPrice}$`}</span>{" "}
+                  {book ? (
+                    <a
+                      className="text-decoration-none ms-5  d-inline-block btn btn-outline-dark"
+                      href={book.bookPdf.url}
+                    >
+                      View Pdf
+                      <i
+                        className="ms-2 fa-solid fa-file-pdf d-inline-block"
+                        style={{ color: "#aa275b" }}
+                      ></i>
+                    </a>
+                  ) : null}
                   <br />
                   <span className="text" style={{ color: "green" }}>
                     {`Discount : ${book.discount}%`}
@@ -90,6 +116,7 @@ const BookDetails = () => {
                     <button
                       className="btn btn-danger flex-shrink-1"
                       type="button"
+                      onClick={handleAddToCart}
                     >
                       Add to cart
                     </button>
