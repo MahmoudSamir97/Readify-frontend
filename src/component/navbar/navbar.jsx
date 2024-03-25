@@ -127,7 +127,7 @@ const Navbar = () => {
                 <div
                   className={`dropdown-menu ${open ? "active" : "inactive"}`}
                 >
-                  <h3 className="dropdown-title">Mahmoudsamir</h3>
+                  {/* <h3 className="dropdown-title">Mahmoudsamir</h3> */}
                   <ul className="dropdown-list">
                     <DropDown
                       img={edit}

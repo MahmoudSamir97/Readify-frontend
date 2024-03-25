@@ -12,15 +12,15 @@ const BookDetails = (props) => {
 
   useEffect(() => {
     const fetchData = async () => {
-      setLoading(true);
+      setloading(true);
       try {
         const req = await axios.get(`http://localhost:4000/book/${id}`);
         const res = req.data.data.book;
-        setBook(res);
-        setLoading(false);
+        setbook(res);
+        setloading(false);
       } catch (error) {
         console.error("Error fetching book details:", error);
-        setLoading(false);
+        setloading(false);
       }
     };
     const getPurchasedItems = async () => {
@@ -63,6 +63,33 @@ const BookDetails = (props) => {
       );
     } catch (error) {
       console.error("Error fetching book details:", error);
+    }
+  };
+  const handleAddToWishlist = async () => {
+    try {
+      const token = localStorage.getItem("token");
+      if (!token) {
+        console.error("Token not found in local storage");
+        return;
+      }
+
+      const config = {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      };
+
+      const wishlistItem = { bookId: book._id }; // Assuming the book object has an _id property
+
+      const response = await axios.post(
+        "http://localhost:4000/wishlist",
+        { wishlistItems: [wishlistItem] },
+        config
+      );
+
+      console.log("Added to wishlist:", response.data);
+    } catch (error) {
+      console.error("Error adding to wishlist:", error);
     }
   };
   console.log(purchasedBooks);
