@@ -1,4 +1,3 @@
-
 // import React, { useEffect, useState } from "react";
 // import { motion } from "framer-motion"; // Import motion for animation
 // import { Link } from "react-router-dom";
@@ -85,7 +84,7 @@
 //                 <span>{book.bookPrice - 2}$</span>
 //               </p>
 //             </div>
-           
+
 //           </div>
 //         </div>
 //       </div>
@@ -121,7 +120,10 @@ const Wishlist = () => {
           },
         };
 
-        const response = await axios.get("http://localhost:4000/wishlist", config);
+        const response = await axios.get(
+          "http://localhost:4000/wishlist",
+          config
+        );
         setWishlistItems(response.data.cart.wishlistItems);
         setLoading(false);
       } catch (error) {
@@ -150,7 +152,9 @@ const Wishlist = () => {
 
       await axios.delete(`http://localhost:4000/wishlist/${bookId}`, config);
       // After successful deletion, update the wishlist items
-      setWishlistItems(wishlistItems.filter(item => item.bookId._id !== bookId));
+      setWishlistItems(
+        wishlistItems.filter((item) => item.bookId._id !== bookId)
+      );
     } catch (error) {
       console.error("Error removing book from wishlist:", error);
     }
@@ -165,17 +169,29 @@ const Wishlist = () => {
         <div>Loading...</div>
       ) : isWishlistEmpty ? (
         <div className="text-center">
-          <FontAwesomeIcon icon={faSadTear} size="4x" className="text-muted mb-3" />
+          <FontAwesomeIcon
+            icon={faSadTear}
+            size="4x"
+            className="text-muted mb-3"
+          />
           <p className="mb-3">You haven't added any favorite books yet!</p>
-          <p className="mb-3">Add some books to your wishlist by browsing our collection.</p>
+          <p className="mb-3">
+            Add some books to your wishlist by browsing our collection.
+          </p>
           <Link to="/allbooks">
-            <button className="btn btn-outline-secondary">Go To Shopping</button>
+            <button className="btn btn-outline-secondary">
+              Go To Shopping
+            </button>
           </Link>
         </div>
       ) : (
         <div className="row">
           {wishlistItems.map((wishlistItem, index) => (
-            <BookItem key={index} book={wishlistItem.bookId} removeFromWishlist={removeFromWishlist} />
+            <BookItem
+              key={index}
+              book={wishlistItem.bookId}
+              removeFromWishlist={removeFromWishlist}
+            />
           ))}
         </div>
       )}
@@ -203,7 +219,10 @@ const BookItem = ({ book, removeFromWishlist }) => {
                 <span>{book.bookPrice - 2}$</span>
               </p>
             </div>
-            <button onClick={() => removeFromWishlist(book._id)} className="btn btn-danger">
+            <button
+              onClick={() => removeFromWishlist(book._id)}
+              className="btn btn-danger"
+            >
               <FontAwesomeIcon icon={faTrash} /> Remove
             </button>
           </div>

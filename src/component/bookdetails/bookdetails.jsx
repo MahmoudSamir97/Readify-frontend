@@ -5,7 +5,6 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 
 const BookDetails = (props) => {
-  console.log(props);
   const [loading, setloading] = useState(false);
   const [purchasedBooks, setPurchasedBooks] = useState([]);
   const { id } = useParams();
@@ -13,15 +12,15 @@ const BookDetails = (props) => {
 
   useEffect(() => {
     const fetchData = async () => {
-      setLoading(true);
+      setloading(true);
       try {
         const req = await axios.get(`http://localhost:4000/book/${id}`);
         const res = req.data.data.book;
-        setBook(res);
-        setLoading(false);
+        setbook(res);
+        setloading(false);
       } catch (error) {
         console.error("Error fetching book details:", error);
-        setLoading(false);
+        setloading(false);
       }
     };
     const getPurchasedItems = async () => {
@@ -31,7 +30,8 @@ const BookDetails = (props) => {
           headers: { Authorization: `Bearer ${token}` },
         };
         const req = await axios.get(`http://localhost:4000/purchased`, config);
-        console.log(req);
+        const data = req.data.cart.cartItems;
+        setPurchasedBooks(data);
       } catch (error) {
         console.error("Error fetching book details:", error);
         setloading(false);
@@ -61,12 +61,38 @@ const BookDetails = (props) => {
         requestBody,
         config
       );
-      console.log(req);
-      setPurchasedBooks();
     } catch (error) {
       console.error("Error fetching book details:", error);
     }
   };
+  const handleAddToWishlist = async () => {
+    try {
+      const token = localStorage.getItem("token");
+      if (!token) {
+        console.error("Token not found in local storage");
+        return;
+      }
+
+      const config = {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      };
+
+      const wishlistItem = { bookId: book._id }; // Assuming the book object has an _id property
+
+      const response = await axios.post(
+        "http://localhost:4000/wishlist",
+        { wishlistItems: [wishlistItem] },
+        config
+      );
+
+      console.log("Added to wishlist:", response.data);
+    } catch (error) {
+      console.error("Error adding to wishlist:", error);
+    }
+  };
+  console.log(purchasedBooks);
 
   return (
     <section className="py-5">
@@ -87,7 +113,26 @@ const BookDetails = (props) => {
                 <h1 className="display-5 fw-bolder">{book.bookTitle}</h1>
                 <div className="fs-5 mb-5">
                   <span className="text">{`Price : ${book.bookPrice}$`}</span>{" "}
-                  {book ? (
+                  {/* Logic */}
+                  {purchasedBooks.some(
+                    (purchasedBook) =>
+                      purchasedBook.bookTitle === book.bookTitle
+                  ) && (
+                    <a
+                      className="text-decoration-none ms-5 d-inline-block btn btn-outline-dark"
+                      href={book?.bookPdf?.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      View PDF
+                      <i
+                        className="ms-2 fa-solid fa-file-pdf d-inline-block"
+                        style={{ color: "#aa275b" }}
+                      ></i>
+                    </a>
+                  )}
+                  {/* Logic */}
+                  {/* {book ? (
                     <a
                       className="text-decoration-none ms-5  d-inline-block btn btn-outline-dark"
                       href={book.bookPdf.url}
@@ -98,7 +143,7 @@ const BookDetails = (props) => {
                         style={{ color: "#aa275b" }}
                       ></i>
                     </a>
-                  ) : null}
+                  ) : null} */}
                   <br />
                   <span className="text" style={{ color: "green" }}>
                     {`Discount : ${book.discount}%`}
