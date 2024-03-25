@@ -13,32 +13,32 @@ import img7 from "../../assets/images/img7.jpg";
 const AboutUs = () => {
   const teamMembers = [
     {
-      name: "Member 1",
-      position: "Position 1",
+      name: "Mahmoud Samir",
+      position: "Backend Developer",
       description: "Description for member 1",
       imageUrl: img1,
     },
     {
-      name: "Member 2",
-      position: "Position 2",
+      name: "Shams AbdelTwab",
+      position: "Backend",
       description: "Description for member 2",
       imageUrl: img2,
     },
     {
-      name: "Member 3",
-      position: "Position 3",
+      name: "Mohammed Tarek",
+      position: "Frontend",
       description: "Description for member 3",
       imageUrl: img3,
     },
     {
-      name: "Member 4",
-      position: "Position 4",
+      name: "Menna Mohammed",
+      position: "Backend developer",
       description: "Description for member 4",
       imageUrl: img4,
     },
     {
-      name: "Member 5",
-      position: "Position 5",
+      name: "Fatma Soliman ",
+      position: "Frontend",
       description: "Description for member 5",
       imageUrl: img5,
     },
@@ -157,9 +157,9 @@ const AboutUs = () => {
                   borderRadius: "50px",
                 }}
               >
-                <h1 style={{ color: "#333", marginBottom: "10px" }}>
+                <h4 style={{ color: "#333", marginBottom: "10px" }}>
                   {member.name}
-                </h1>
+                </h4>
                 <p style={{ color: "#666", marginBottom: "9px" }}>
                   {member.position}
                 </p>

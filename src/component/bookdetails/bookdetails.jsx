@@ -1,8 +1,8 @@
-import React, { useState } from "react";
+// import React, { useState } from "react";
 import { useParams } from "react-router-dom";
 import "./bookdetails.css";
 import axios from "axios";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 const BookDetails = (props) => {
   const [loading, setloading] = useState(false);
@@ -12,15 +12,15 @@ const BookDetails = (props) => {
 
   useEffect(() => {
     const fetchData = async () => {
-      setloading(true);
+      setLoading(true);
       try {
         const req = await axios.get(`http://localhost:4000/book/${id}`);
         const res = req.data.data.book;
-        setbook(res);
-        setloading(false);
+        setBook(res);
+        setLoading(false);
       } catch (error) {
         console.error("Error fetching book details:", error);
-        setloading(false);
+        setLoading(false);
       }
     };
     const getPurchasedItems = async () => {
@@ -141,6 +141,7 @@ const BookDetails = (props) => {
                     <button
                       className="btn btn-outline-dark flex-shrink-1 mx-2"
                       type="button"
+                      onClick={handleAddToWishlist} // Call handleAddToWishlist when Wishlist button is clicked
                     >
                       WishList <i className="far fa-heart"></i>
                     </button>
