@@ -8,7 +8,7 @@ import { useEffect } from "react";
 import axios from "axios";
 //import { concat } from "joi-browser";
 
-const AllBooks = () => {
+const AllBooks = ({ setBooksData }) => {
   const [Filter, setfilter] = useState();
   const Filtration = (value) => {
     setfilter(value);
@@ -23,9 +23,11 @@ const AllBooks = () => {
   async function getData() {
     const req = await axios.get("http://localhost:4000/book/AllBook");
     const res = await req.data.data.allBooks;
+    console.log(res);
     setloading(true);
     setloading(false);
     setallBook(res);
+    setBooksData(res);
   }
 
   useEffect(() => {
@@ -38,7 +40,6 @@ const AllBooks = () => {
     fetch("http://localhost:4000/category")
       .then((req) => req.json())
       .then((res) => console.log(setcategory(res.data.allCategories)));
-    //
     //
   }, []);
 

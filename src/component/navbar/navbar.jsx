@@ -1,22 +1,18 @@
 import React, { useState, useEffect, useRef, useContext } from "react";
 import { NavLink, Link } from "react-router-dom";
 import "./navbar.css";
-import Books from "../db";
 import useSticky from "./useSticky";
 import logo from "./../../assets/images/icons8-book-48.png";
+import DropDown from "../DropDown/DropDown";
+import { imageContext } from "../Context/ProfileImageContext";
 // dropdown images
 import userImg from "./../../assets/images/dropdown/user.png";
 import edit from "./../../assets/images/dropdown/edit.png";
 import settings from "./../../assets/images/dropdown/settings.png";
 import help from "./../../assets/images/dropdown/question.png";
 import logout from "./../../assets/images/dropdown/log-out.png";
-import DropDown from "../DropDown/DropDown";
-import { imageContext } from "../Context/ProfileImageContext";
-//
 
-const Navbar = ({ user, setUser }) => {
-  const [cartnum, setCartNum] = useState([]);
-  const [wishcount, setWishCount] = useState();
+const Navbar = () => {
   const { sticky, stickyRef } = useSticky();
   const [open, setOpen] = useState(false);
   const { profileImage } = useContext(imageContext);
@@ -38,13 +34,6 @@ const Navbar = ({ user, setUser }) => {
       document.removeEventListener("mousedown", handler);
     };
   });
-
-  useEffect(() => {
-    const cartBooks = Books.filter((element) => element.isInCart === true);
-    const wishlistBooks = Books.filter((element) => element.wishlist === true);
-    setCartNum(cartBooks);
-    setWishCount(wishlistBooks.length);
-  }, [cartnum]);
 
   return (
     <>
@@ -83,43 +72,33 @@ const Navbar = ({ user, setUser }) => {
           >
             <div className="flex-fill">
               <ul className="nav navbar-nav d-lg-inline-flex  mx-lg-5">
-                {user === "admin" ? (
-                  <li className="nav-item mx-lg-4">
-                    <Link className="nav-link" to={"/admin"}>
-                      Admin page
-                    </Link>
-                  </li>
-                ) : (
-                  <>
-                    <li className="nav-item mx-lg-4">
-                      <Link className="nav-link" aria-current="page" to={"/"}>
-                        Home
-                      </Link>
-                    </li>
+                <li className="nav-item mx-lg-4">
+                  <Link className="nav-link" aria-current="page" to={"/"}>
+                    Home
+                  </Link>
+                </li>
 
-                    <li className="nav-item mx-lg-4">
-                      <Link className="nav-link" to={"/allbooks"}>
-                        Books
-                      </Link>
-                    </li>
-                    <li className="nav-item mx-lg-4">
-                      <Link className="nav-link" to={"/contact"}>
-                        Contact
-                      </Link>
-                    </li>
+                <li className="nav-item mx-lg-4">
+                  <Link className="nav-link" to={"/allbooks"}>
+                    Books
+                  </Link>
+                </li>
+                <li className="nav-item mx-lg-4">
+                  <Link className="nav-link" to={"/contact"}>
+                    Contact
+                  </Link>
+                </li>
 
-                    <li className="nav-item mx-lg-4">
-                      <Link className="nav-link" to={"/aboutus"}>
-                        About us
-                      </Link>
-                    </li>
-                    <li className="nav-item mx-lg-4">
-                      <Link className="nav-link" to={"/login"}>
-                        Login
-                      </Link>
-                    </li>
-                  </>
-                )}
+                <li className="nav-item mx-lg-4">
+                  <Link className="nav-link" to={"/aboutus"}>
+                    About us
+                  </Link>
+                </li>
+                <li className="nav-item mx-lg-4">
+                  <Link className="nav-link" to={"/login"}>
+                    Login
+                  </Link>
+                </li>
               </ul>
             </div>
 
@@ -129,21 +108,10 @@ const Navbar = ({ user, setUser }) => {
                 to={"./shoppingcart"}
               >
                 <i className="fa fa-fw fa-cart-arrow-down text-dark" />
-                <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-light text-dark">
-                  {cartnum.length}
-                </span>
+                <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-light text-dark"></span>
               </NavLink>
-              <NavLink
-                className={`${
-                  wishcount > 0 ? "nav-link " : "nav-link "
-                } wishlink`}
-                to={"/wishlist"}
-              >
-                <i
-                  className={
-                    wishcount > 0 ? "fas fa-heart text-danger" : "far fa-heart"
-                  }
-                ></i>
+              <NavLink className="nav-link wishlink" to={"/wishlist"}>
+                <i className="fas fa-heart text-danger"></i>
               </NavLink>
               {/* drop down here */}
               <div className="menu-container" ref={menuRef}>
