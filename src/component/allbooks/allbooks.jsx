@@ -23,7 +23,7 @@ const AllBooks = ({ setBooksData }) => {
     setloading(true);
     setloading(false);
     setallBook(res);
-    setBooksData(res);
+    // setBooksData(res);
   }
 
   useEffect(() => {

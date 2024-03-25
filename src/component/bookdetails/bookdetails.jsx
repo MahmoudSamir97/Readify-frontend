@@ -5,7 +5,6 @@ import axios from "axios";
 import { useEffect } from "react";
 
 const BookDetails = (props) => {
-  console.log(props);
   const [loading, setloading] = useState(false);
   const [purchasedBooks, setPurchasedBooks] = useState([]);
   const { id } = useParams();
@@ -31,7 +30,8 @@ const BookDetails = (props) => {
           headers: { Authorization: `Bearer ${token}` },
         };
         const req = await axios.get(`http://localhost:4000/purchased`, config);
-        console.log(req);
+        const data = req.data.cart.cartItems;
+        setPurchasedBooks(data);
       } catch (error) {
         console.error("Error fetching book details:", error);
         setloading(false);
@@ -61,12 +61,11 @@ const BookDetails = (props) => {
         requestBody,
         config
       );
-      console.log(req);
-      setPurchasedBooks();
     } catch (error) {
       console.error("Error fetching book details:", error);
     }
   };
+  console.log(purchasedBooks);
 
   return (
     <section className="py-5">
@@ -87,7 +86,26 @@ const BookDetails = (props) => {
                 <h1 className="display-5 fw-bolder">{book.bookTitle}</h1>
                 <div className="fs-5 mb-5">
                   <span className="text">{`Price : ${book.bookPrice}$`}</span>{" "}
-                  {book ? (
+                  {/* Logic */}
+                  {purchasedBooks.some(
+                    (purchasedBook) =>
+                      purchasedBook.bookTitle === book.bookTitle
+                  ) && (
+                    <a
+                      className="text-decoration-none ms-5 d-inline-block btn btn-outline-dark"
+                      href={book?.bookPdf?.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      View PDF
+                      <i
+                        className="ms-2 fa-solid fa-file-pdf d-inline-block"
+                        style={{ color: "#aa275b" }}
+                      ></i>
+                    </a>
+                  )}
+                  {/* Logic */}
+                  {/* {book ? (
                     <a
                       className="text-decoration-none ms-5  d-inline-block btn btn-outline-dark"
                       href={book.bookPdf.url}
@@ -98,7 +116,7 @@ const BookDetails = (props) => {
                         style={{ color: "#aa275b" }}
                       ></i>
                     </a>
-                  ) : null}
+                  ) : null} */}
                   <br />
                   <span className="text" style={{ color: "green" }}>
                     {`Discount : ${book.discount}%`}
