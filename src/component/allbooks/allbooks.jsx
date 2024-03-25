@@ -4,7 +4,40 @@ import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import axios from "axios";
 
-const AllBooks = () => {
+const AllBooks = ({ setBooksData }) => {
+  const [Filter, setfilter] = useState();
+  const Filtration = (value) => {
+    setfilter(value);
+  };
+  function Filterator(ele) {
+    console.log(ele);
+  }
+  const [category, setcategory] = useState([]);
+  const [allBook, setallBook] = useState([]);
+
+  const [loadingg, setloading] = useState(false);
+  async function getData() {
+    const req = await axios.get("http://localhost:4000/book/AllBook");
+    const res = await req.data.data.allBooks;
+    console.log(res);
+    setloading(true);
+    setloading(false);
+    setallBook(res);
+    setBooksData(res);
+  }
+
+  useEffect(() => {
+    getData();
+  }, []);
+
+  // Category
+
+  useEffect(() => {
+    fetch("http://localhost:4000/category")
+      .then((req) => req.json())
+      .then((res) => console.log(setcategory(res.data.allCategories)));
+    //
+  }, []);
   const [selectedCategory, setSelectedCategory] = useState("All");
   const [categories, setCategories] = useState([]);
   const [allBooks, setAllBooks] = useState([]);
@@ -12,7 +45,8 @@ const AllBooks = () => {
 
   useEffect(() => {
     // Fetch all categories
-    axios.get("http://localhost:4000/category")
+    axios
+      .get("http://localhost:4000/category")
       .then((response) => {
         setCategories(response.data.data.allCategories);
       })
@@ -22,17 +56,20 @@ const AllBooks = () => {
   }, []);
 
   useEffect(() => {
- 
     // Fetch books based on selected category
     setLoading(true);
     let url =
       selectedCategory === "All"
         ? "http://localhost:4000/book/AllBook"
         : `http://localhost:4000/book/getAllBookInCategory/${selectedCategory}`;
-    axios.get(url)
+    axios
+      .get(url)
       .then((response) => {
         console.log("Books response:", response.data); // Log the response from the API
-        let booksData = selectedCategory === "All" ? response.data.data.allBooks : response.data.data.allCategoryProducts;
+        let booksData =
+          selectedCategory === "All"
+            ? response.data.data.allBooks
+            : response.data.data.allCategoryProducts;
         setAllBooks(booksData || []); // Update allBooks state with fetched data
         setLoading(false);
       })
@@ -41,7 +78,7 @@ const AllBooks = () => {
         setLoading(false);
       });
   }, [selectedCategory]);
-  
+
   const handleCategoryChange = (event) => {
     setSelectedCategory(event.target.value);
   };

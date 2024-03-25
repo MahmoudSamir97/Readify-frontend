@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { Routes, Route } from "react-router-dom";
-import AddNewItem from "./component/addnewitem/addnewitem";
 import Admin from "./component/admin/admin";
 import Edit from "./component/edit/edit";
 import ShoppingCart from "./component/shoppingcart/shoppingcart";
@@ -8,7 +7,6 @@ import BookDetails from "./component/bookdetails/bookdetails";
 import HomePage from "./component/homepage/homepage";
 import ContactUs from "./component/contact/contact";
 import Navbar from "./component/navbar/navbar";
-import Books from "./component/db";
 import AllBooks from "./component/allbooks/allbooks";
 import Wishlist from "./component/wishlist/wishilst";
 import RatingForm from "./component/ratingform/ratingform";
@@ -25,136 +23,53 @@ import CheckoutSuccess from "./component/CheckoutSuccess/CheckoutSuccess";
 import EditProfile from "./component/EditProfile/EditProfile";
 import ChangePassword from "./component/ChangePassword/ChangePassword";
 import Helps from "./component/Helps/Helps";
+
 const App = () => {
-  // CHAT
-  const [rooms, setRooms] = useState([]);
-  const [currentRoom, setCurrentRoom] = useState([]);
-  const [members, setMembers] = useState([]);
-  const [messages, setMessages] = useState([]);
-  const [privateMemberMsg, setPrivateMemberMsg] = useState({});
-  const [newMessages, setNewMessages] = useState({});
-  // CHAT
-  const [books, setBooks] = useState(Books);
-  const [user, setUser] = useState("");
-  const token = localStorage.getItem("token");
-
-  const onWishlist = (book) => {
-    //edit
-    book.wishlist = true;
-    setBooks([...books], books);
-  };
-
-  const onCart = (book) => {
-    //edit
-    book.isInCart = true;
-    book.count++;
-    setBooks([...books], books);
-  };
-
-  const handleRemoveItem = async (book) => {
-    //clone
-
-    //edit
-    if (book.wishlist === true) {
-      book.wishlist = false;
-    }
-    book.isInCart = false;
-    setBooks([...books], books);
-  };
-
-  const handleDelete = async (book) => {
-    //clone
-    //edit
-    const newbooks = books.filter((p) => book.id !== p.id);
-    //set state
-    setBooks(newbooks);
-  };
-
-  const handleIncrement = (book) => {
-    const index = books.indexOf(book);
-    //edit
-    books[index].count++;
-    //
-    setBooks(books);
-  };
-
-  const handleDecrement = (book) => {
-    //edit
-    if (book.count >= 1) {
-      book.count--;
-    } else {
-      alert("the count cannot be less than one item");
-    }
-    //
-    setBooks(books);
-  };
-
+  // const [BooksData, setBooksData] = useState([]);
+  // const [wishlist, setWishlist] = useState([]);
+  // const [cart, setCart] = useState([]);
+  // const removeFromCart = (bookToRemove) => {
+  //   setCart((prevCart) =>
+  //     prevCart.filter((book) => book.id !== bookToRemove.id)
+  //   );
+  // };
+  // const addToWishlist = (favouredBook) => {
+  //   favouredBook.wishlist = true;
+  //   setWishlist([...wishlist, favouredBook]);
+  // };
+  // const addToCart = (book) => {
+  //   book.isInCart = true;
+  //   book.count++;
+  //   setCart([...cart, book]);
+  // };
+  // const handleRemoveItem = async (book) => {
+  //   if (book.wishlist === true) {
+  //     book.wishlist = false;
+  //   }
+  //   book.isInCart = false;
+  //   setBooks([...books], books);
+  // };
+  // const handleDelete = async (book) => {
+  //   const newbooks = books.filter((p) => book.id !== p.id);
+  //   setBooks(newbooks);
+  // };
   return (
     <>
-      <Navbar books={books} user={user} setUser={setUser} />
+      <Navbar />
       <Routes>
-        <Route path="/" element={<HomePage onSave={onCart} books={books} />} />
+        <Route path="/" element={<HomePage />} />
         <Route path="/admin" element={<Admin />} />
         <Route path="/aboutus" element={<AboutUs />} />
         <Route path="/contact" element={<ContactUs />} />
         <Route path="/ratingform" element={<RatingForm />} />
-        <Route
-          path="/admin/edit"
-          element={<Edit books={books} onDelete={handleDelete} />}
-        />
-        <Route path="/allbooks" books element={<AllBooks books={books} />} />
-        <Route
-          path="/admin/addnewitem"
-          element={<AddNewItem books={books} setBooks={setBooks} />}
-        />
-        <Route
-          path="/bookdetails/:id"
-          element={
-            <BookDetails
-              books={books}
-              onSave={onCart}
-              onWishlist={onWishlist}
-            />
-          }
-        />
-
-        <Route
-          path="allbooks/bookdetails/:id"
-          element={
-            <BookDetails
-              books={books}
-              onSave={onCart}
-              onWishlist={onWishlist}
-            />
-          }
-        />
-        <Route
-          path="wishlist/bookdetails/:id"
-          element={
-            <BookDetails
-              books={books}
-              onSave={onCart}
-              onWishlist={onWishlist}
-            />
-          }
-        />
-        <Route
-          path="/wishlist"
-          element={<Wishlist books={books} onDelete={handleRemoveItem} />}
-        />
+        <Route path="/admin/edit" element={<Edit />} />
+        <Route path="/allbooks" books element={<AllBooks />} />
+        <Route path="/bookdetails/:id" element={<BookDetails />} />
+        <Route path="allbooks/bookdetails/:id" element={<BookDetails />} />
+        <Route path="wishlist/bookdetails/:id" element={<BookDetails />} />
+        <Route path="/wishlist" element={<Wishlist />} />
         <Route path="/chat" element={<Chat />} />
-        <Route
-          path="/shoppingcart"
-          element={
-            <ShoppingCart
-              books={books}
-              onSave={onCart}
-              onIncrement={handleIncrement}
-              onDecrement={handleDecrement}
-              onDelete={handleRemoveItem}
-            />
-          }
-        />
+        <Route path="/shoppingcart" element={<ShoppingCart />} />
         <Route path="/checkout-success" element={<CheckoutSuccess />} />
         <Route path="/signin" element={<SignInSignUpForm />} />
         <Route path="/login" element={<Login />} />

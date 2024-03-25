@@ -1,21 +1,7 @@
-import { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 import styled from "styled-components";
-import { clearCart, getTotals } from "../../slices/cartSlice";
-// import { clearCart, getTotals } from "../slices/cartSlice";
 
 const CheckoutSuccess = () => {
-  const dispatch = useDispatch();
-  const cart = useSelector((state) => state.cart);
-
-  useEffect(() => {
-    dispatch(clearCart());
-  }, [dispatch]);
-
-  useEffect(() => {
-    dispatch(getTotals());
-  }, [cart, dispatch]);
-
   return (
     <Container>
       <h2>Checkout Successful</h2>
@@ -25,6 +11,7 @@ const CheckoutSuccess = () => {
         Incase of any inqueries contact the support at{" "}
         <strong>support@Readify.com</strong>
       </p>
+      <Link to={"/home"}>Return to home</Link>
     </Container>
   );
 };
