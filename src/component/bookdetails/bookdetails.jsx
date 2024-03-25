@@ -1,36 +1,58 @@
-import React, { useState } from "react";
+// import React, { useState } from "react";
 import { useParams } from "react-router-dom";
 import "./bookdetails.css";
 import axios from "axios";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
-// import { useDispatch } from "react-redux";
-
-import { addToCart } from "../../slices/cartSlice";
 
 const BookDetails = () => {
-  const [loading, setloading] = useState(false);
+  const [loading, setLoading] = useState(false);
   const { id } = useParams();
-
-  // const dispatch = useDispatch();
-
-  const [book, setbook] = useState("");
+  const [book, setBook] = useState("");
 
   useEffect(() => {
     const fetchData = async () => {
-      setloading(true);
+      setLoading(true);
       try {
         const req = await axios.get(`http://localhost:4000/book/${id}`);
         const res = req.data.data.book;
-        setbook(res);
-        setloading(false);
+        setBook(res);
+        setLoading(false);
       } catch (error) {
         console.error("Error fetching book details:", error);
-        setloading(false);
+        setLoading(false);
       }
     };
     fetchData();
   }, [id]);
+
+  const handleAddToWishlist = async () => {
+    try {
+      const token = localStorage.getItem("token");
+      if (!token) {
+        console.error("Token not found in local storage");
+        return;
+      }
+
+      const config = {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      };
+
+      const wishlistItem = { bookId: book._id }; // Assuming the book object has an _id property
+
+      const response = await axios.post(
+        "http://localhost:4000/wishlist",
+        { wishlistItems: [wishlistItem] },
+        config
+      );
+
+      console.log("Added to wishlist:", response.data);
+    } catch (error) {
+      console.error("Error adding to wishlist:", error);
+    }
+  };
 
   return (
     <section className="py-5">
@@ -67,7 +89,6 @@ const BookDetails = () => {
                   <div>
                     <button
                       className="btn btn-danger flex-shrink-1"
-
                       type="button"
                     >
                       Add to cart
@@ -75,6 +96,7 @@ const BookDetails = () => {
                     <button
                       className="btn btn-outline-dark flex-shrink-1 mx-2"
                       type="button"
+                      onClick={handleAddToWishlist} // Call handleAddToWishlist when Wishlist button is clicked
                     >
                       WishList <i className="far fa-heart"></i>
                     </button>

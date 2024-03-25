@@ -1,59 +1,181 @@
+
+// import React, { useEffect, useState } from "react";
+// import { motion } from "framer-motion"; // Import motion for animation
+// import { Link } from "react-router-dom";
+// import axios from "axios";
+// import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+// import { faSadTear } from "@fortawesome/free-solid-svg-icons"; // Import the sad face icon
+
+// const Wishlist = () => {
+//   const [wishlistItems, setWishlistItems] = useState([]);
+//   const [loading, setLoading] = useState(false);
+
+//   useEffect(() => {
+//     const fetchWishlist = async () => {
+//       try {
+//         setLoading(true);
+//         const token = localStorage.getItem("token");
+//         if (!token) {
+//           console.error("Token not found in local storage");
+//           return;
+//         }
+
+//         const config = {
+//           headers: {
+//             Authorization: `Bearer ${token}`,
+//           },
+//         };
+
+//         const response = await axios.get("http://localhost:4000/wishlist", config);
+//         setWishlistItems(response.data.cart.wishlistItems);
+//         setLoading(false);
+//       } catch (error) {
+//         console.error("Error fetching wishlist:", error);
+//         setLoading(false);
+//       }
+//     };
+
+//     fetchWishlist();
+//   }, []);
+
+//   // Check if there are no books in the wishlist
+//   const isWishlistEmpty = wishlistItems.length === 0;
+
+//   return (
+//     <div className="wishlist mt-5 p-3 rounded cart">
+//       {loading ? (
+//         <div>Loading...</div>
+//       ) : isWishlistEmpty ? (
+//         <div className="text-center">
+//           <FontAwesomeIcon icon={faSadTear} size="4x" className="text-muted mb-3" />
+//           <p className="mb-3">You haven't added any favorite books yet!</p>
+//           <p className="mb-3">Add some books to your wishlist by browsing our collection.</p>
+//           <Link to="/allbooks">
+//             <button className="btn btn-outline-secondary">Go To Shopping</button>
+//           </Link>
+//         </div>
+//       ) : (
+//         <div className="row">
+//           {wishlistItems.map((wishlistItem, index) => (
+//             <BookItem key={index} book={wishlistItem.bookId} />
+//           ))}
+//         </div>
+//       )}
+//     </div>
+//   );
+// };
+
+// // BookItem component to handle each book in the wishlist
+// const BookItem = ({ book }) => {
+//   return (
+//     <motion.div
+//       className="col-md-4 mb-4"
+//       initial={{ opacity: 0, scale: 0 }} // Initial animation state
+//       animate={{ opacity: 1, scale: 1 }} // Animation when in view
+//       transition={{ duration: 0.5 }} // Transition animation
+//     >
+//       <div className="book-card">
+//         <div className="imgBox">
+//           <img src={book.bookImage.url} alt={`book-${book._id}`} />
+//           <div className="content">
+//             <div className="name-price">
+//               <h4>{book.bookTitle}</h4>
+//               <p className="item-price">
+//                 <strike>{book.bookPrice}$</strike>
+//                 <span>{book.bookPrice - 2}$</span>
+//               </p>
+//             </div>
+           
+//           </div>
+//         </div>
+//       </div>
+//     </motion.div>
+//   );
+// };
+
+// export default Wishlist;
 import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion"; // Import motion for animation
-import images from "../../assets/images";
 import { Link } from "react-router-dom";
-import "./wishlist.css";
+import axios from "axios";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSadTear } from "@fortawesome/free-solid-svg-icons"; // Import the sad face icon
+import { faSadTear, faTrash } from "@fortawesome/free-solid-svg-icons"; // Import the sad face icon and trash icon
 
-const Wishlist = ({ books, onDelete }) => {
-  const [wishBooks, setWishBooks] = useState([]);
+const Wishlist = () => {
+  const [wishlistItems, setWishlistItems] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    setWishBooks(books.filter((book) => book.wishlist === true));
-  }, [books]);
+    const fetchWishlist = async () => {
+      try {
+        setLoading(true);
+        const token = localStorage.getItem("token");
+        if (!token) {
+          console.error("Token not found in local storage");
+          return;
+        }
 
-  // Function to remove a book from the wishlist
-  const handleRemove = (bookToRemove) => {
-    const updatedWishBooks = wishBooks.filter(
-      (book) => book.id !== bookToRemove.id
-    );
-    setWishBooks(updatedWishBooks);
-    onDelete(bookToRemove); // Call onDelete function to remove from parent component
-    localStorage.setItem("wishlist", JSON.stringify(updatedWishBooks)); // Update local storage
+        const config = {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        };
+
+        const response = await axios.get("http://localhost:4000/wishlist", config);
+        setWishlistItems(response.data.cart.wishlistItems);
+        setLoading(false);
+      } catch (error) {
+        console.error("Error fetching wishlist:", error);
+        setLoading(false);
+      }
+    };
+
+    fetchWishlist();
+  }, []);
+
+  // Function to remove book from wishlist
+  const removeFromWishlist = async (bookId) => {
+    try {
+      const token = localStorage.getItem("token");
+      if (!token) {
+        console.error("Token not found in local storage");
+        return;
+      }
+
+      const config = {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      };
+
+      await axios.delete(`http://localhost:4000/wishlist/${bookId}`, config);
+      // After successful deletion, update the wishlist items
+      setWishlistItems(wishlistItems.filter(item => item.bookId._id !== bookId));
+    } catch (error) {
+      console.error("Error removing book from wishlist:", error);
+    }
   };
 
   // Check if there are no books in the wishlist
-  const isWishlistEmpty = wishBooks.length === 0;
+  const isWishlistEmpty = wishlistItems.length === 0;
 
   return (
     <div className="wishlist mt-5 p-3 rounded cart">
-      {isWishlistEmpty ? (
+      {loading ? (
+        <div>Loading...</div>
+      ) : isWishlistEmpty ? (
         <div className="text-center">
-          <FontAwesomeIcon
-            icon={faSadTear}
-            size="4x"
-            className="text-muted mb-3"
-          />
+          <FontAwesomeIcon icon={faSadTear} size="4x" className="text-muted mb-3" />
           <p className="mb-3">You haven't added any favorite books yet!</p>
-          <p className="mb-3">
-            Add some books to your wishlist by browsing our collection.
-          </p>
+          <p className="mb-3">Add some books to your wishlist by browsing our collection.</p>
           <Link to="/allbooks">
-            <button className="btn btn-outline-secondary">
-              Go To Shopping
-            </button>
+            <button className="btn btn-outline-secondary">Go To Shopping</button>
           </Link>
         </div>
       ) : (
         <div className="row">
-          {wishBooks.map((book, index) => (
-            <BookItem
-              key={book.id}
-              book={book}
-              index={index}
-              handleRemove={handleRemove}
-            />
+          {wishlistItems.map((wishlistItem, index) => (
+            <BookItem key={index} book={wishlistItem.bookId} removeFromWishlist={removeFromWishlist} />
           ))}
         </div>
       )}
@@ -62,36 +184,28 @@ const Wishlist = ({ books, onDelete }) => {
 };
 
 // BookItem component to handle each book in the wishlist
-const BookItem = ({ book, index, handleRemove }) => {
+const BookItem = ({ book, removeFromWishlist }) => {
   return (
     <motion.div
       className="col-md-4 mb-4"
       initial={{ opacity: 0, scale: 0 }} // Initial animation state
       animate={{ opacity: 1, scale: 1 }} // Animation when in view
-      transition={{ delay: index * 0.2, duration: 0.9 }} // Transition animation
+      transition={{ duration: 0.5 }} // Transition animation
     >
       <div className="book-card">
         <div className="imgBox">
-          <img src={images[book.id]} alt={`book-${index}`} />
+          <img src={book.bookImage.url} alt={`book-${book._id}`} />
           <div className="content">
             <div className="name-price">
-              <h4>{book.name}</h4>
+              <h4>{book.bookTitle}</h4>
               <p className="item-price">
-                <strike>{book.price}$</strike>
-                <span>{book.price - 2}$</span>
+                <strike>{book.bookPrice}$</strike>
+                <span>{book.bookPrice - 2}$</span>
               </p>
             </div>
-            <div className="description">
-              <p>{book.description}</p>
-            </div>
-            <div className="remove-btn">
-              <button
-                className="btn btn-danger"
-                onClick={() => handleRemove(book)}
-              >
-                Remove
-              </button>
-            </div>
+            <button onClick={() => removeFromWishlist(book._id)} className="btn btn-danger">
+              <FontAwesomeIcon icon={faTrash} /> Remove
+            </button>
           </div>
         </div>
       </div>

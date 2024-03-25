@@ -5,18 +5,15 @@ import { motion } from "framer-motion"; // Import motion for animation
 import { useInView } from "react-intersection-observer";
 
 // Import images
-import book1Image from "./../../assets/images/new1.jpg";
-import book2Image from "./../../assets/images/new2.jpg";
-import book3Image from "./../../assets/images/new3.jpg";
-import book4Image from "./../../assets/images/new1.jpg";
-import book5Image from "./../../assets/images/new2.jpg";
+import book1Image from "./../../assets/images/photo1.jpeg";
+import book2Image from "./../../assets/images/photo2.jpeg";
+import book3Image from "./../../assets/images/photo3.jpeg";
+import book4Image from "./../../assets/images/photo4.jpeg";
+import book5Image from "./../../assets/images/photo5.jpeg";
 
 const BooksView = ({ books }) => {
   // Define image URLs
   const images = [book1Image, book2Image, book3Image, book4Image, book5Image];
-
-  // Slice the first 5 books
-  // const limitedBooks = books.slice(0, 5);
 
   return (
     <section className="most-books">
@@ -28,14 +25,9 @@ const BooksView = ({ books }) => {
             </h2>
           </div>
           <div className="books">
-            {/* {limitedBooks.map((book, index) => (
-              <BookItem
-                key={book.id}
-                book={book}
-                index={index}
-                images={images}
-              />
-            ))} */}
+            {images.map((image, index) => (
+              <BookItem key={index} index={index} image={image} />
+            ))}
           </div>
         </div>
       </div>
@@ -44,7 +36,7 @@ const BooksView = ({ books }) => {
 };
 
 // BookItem component to handle each book with animation
-const BookItem = ({ book, index, images }) => {
+const BookItem = ({ index, image }) => {
   const { ref, inView } = useInView({
     threshold: 0.5, // Trigger the animation when 50% of the section is visible
     triggerOnce: true, // Only trigger the animation once
@@ -59,12 +51,8 @@ const BookItem = ({ book, index, images }) => {
       transition={{ delay: index * 0.2, duration: 0.9 }} // Reduced transition duration to make animation faster
       whileHover={{ scale: 1.1, zIndex: 1 }} // Increase size and move to front on hover
     >
-      <Link to={`./bookdetails/${book.id}`}>
-        <img
-          src={images[index % images.length]}
-          alt={`book-${index}`}
-          loading="lazy"
-        />
+      <Link to={`/bookdetails/${index + 1}`}>
+        <img src={image} alt={`book-${index}`} loading="lazy" />
       </Link>
     </motion.div>
   );
