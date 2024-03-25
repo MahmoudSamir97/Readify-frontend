@@ -2,14 +2,14 @@ import React from "react";
 import { motion } from "framer-motion";
 import "./newbooks.css";
 import { useInView } from "react-intersection-observer";
+import { Link } from "react-router-dom";
 
 // Import images
-import book1Image from "./../../assets/images/new1.jpg";
-import book2Image from "./../../assets/images/new2.jpg";
-import book3Image from "./../../assets/images/new3.jpg";
+import book1Image from "./../../assets/images/photo1.jpeg";
+import book2Image from "./../../assets/images/photo2.jpeg";
+import book3Image from "./../../assets/images/photo3.jpeg";
 
-const NewBooks = ({ books }) => {
-  // console.log(books);
+const NewBooks = () => {
   const { ref, inView } = useInView({
     threshold: 0.5, // Trigger the animation when 50% of the section is visible
     triggerOnce: true, // Only trigger the animation once
@@ -33,8 +33,6 @@ const NewBooks = ({ books }) => {
     return stars;
   };
 
-  // const limitedBooks = books.slice(0, 3); // Slice the first 3 books
-
   // Define image URLs
   const images = [book1Image, book2Image, book3Image];
 
@@ -47,8 +45,8 @@ const NewBooks = ({ books }) => {
               <h2>
                 Most <b>Rated Books</b>
               </h2>
-              <motion.div className="inner-carousel">
-                {/* {limitedBooks.map((book, index) => (
+              <div className="inner-carousel">
+                {images.map((image, index) => (
                   <motion.div
                     className="item"
                     key={index}
@@ -59,28 +57,16 @@ const NewBooks = ({ books }) => {
                     whileHover={{ scale: 1.1, translateY: -10 }}
                   >
                     <div className="imgBox">
-                      <img src={images[index]} alt={`bookimg-${index}`} />
+                      <img src={image} alt={`bookimg-${index}`} />
                       <div className="content">
-                        <div className="name-price">
-                          <Link
-                            to={`/bookdetails/${book.id}`}
-                            style={{ textDecoration: "none" }}
-                          >
-                            <h4>{book.name}</h4>
-                          </Link>
-                          <p className="item-price">
-                            <strike>{book.price}$</strike>
-                            <span>{book.price - 2}$</span>
-                          </p>
-                        </div>
                         <div className="star-rating">
                           <ul className="list-inline">{createStars()}</ul>
                         </div>
                       </div>
                     </div>
                   </motion.div>
-                ))} */}
-              </motion.div>
+                ))}
+              </div>
             </div>
           </div>
         </div>
