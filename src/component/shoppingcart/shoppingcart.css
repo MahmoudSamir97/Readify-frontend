@@ -42,65 +42,39 @@ body {
   margin-top: 10px;
   width: 100%;
   border-collapse: collapse;
-  height: 300px;
 }
 
 .tablecart thead {
   font-size: 14px;
-  border-color: #000000;
   background-color: #af460f;
-  color: white; /* Change text color of table head to white */
+  color: white !important;
 }
 
-.tablecart th {
-  border: 1px solid #edf1ff;
-  padding: 12px;
-  text-align: center;
-  color: #edf1ff;
-}
-
+.tablecart th,
 .tablecart td {
-  border: 1px solid #edf1ff;
+  /* border: 1px solid #edf1ff; */
   padding: 12px;
   text-align: center;
-  color: black; /* Keep text color of table data cells as black */
 }
 
 .align-middle {
-  font-size: 16px;
-}
-
-.tablecart button {
-  border: none;
-  background-color: #af460f;
-  color: white;
-  transition: 0.5s color ease-in-out;
-  padding: 8px 16px;
-  cursor: pointer;
-}
-
-.tablecart button:hover {
-  background-color: #767474;
-}
-
-.tablecart .input {
-  font-size: 12px;
-  padding: 6px;
-}
-
-.tablecart i {
-  font-size: 12px;
+  vertical-align: middle;
 }
 
 .tablecart .delete {
-  cursor: pointer;
-  font-size: 20px;
-  color: #510303;
-  transition: 0.2s color ease-in-out;
+  font-size: 20px; 
+  color: #af460f;
 }
 
-.delete:hover {
-  color: #af460f;
+.tablecart .delete:hover {
+
+  color: #bb602f;
+}
+
+@media screen and (max-width: 600px) {
+  .tablecart {
+    width: 100%;
+  }
 }
 
 .card {
@@ -113,6 +87,8 @@ body {
 .card h6 {
   font-size: 14px;
 }
+
+
 
 @media screen and (min-width: 300px) and (max-width: 600px) {
   .tablecart {
@@ -131,3 +107,7 @@ body {
     font-size: 6px;
   }
 }
+
+
+
+

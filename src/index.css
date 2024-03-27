@@ -6,13 +6,12 @@
   --border-radius: 8px;
   --speed: 500ms;
 }
-* {
-  margin: 0;
-  padding: 0;
+*,
+*::before,
+*::after {
   box-sizing: border-box;
 }
 body {
-  min-height: 11vh;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
     "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
     sans-serif;
@@ -135,4 +134,4 @@ a {
   margin-left: 10px;
   transition: var(--speed);
 }
-/* drop down style */
+
