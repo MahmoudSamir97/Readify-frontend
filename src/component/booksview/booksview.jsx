@@ -1,33 +1,73 @@
-import React from "react";
+import React, { useEffect, useRef, useState } from "react";
 import "./booksview.css";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion"; // Import motion for animation
 import { useInView } from "react-intersection-observer";
+import axios from "axios";
 
-// Import images
-import book1Image from "./../../assets/images/photo1.jpeg";
-import book2Image from "./../../assets/images/photo2.jpeg";
-import book3Image from "./../../assets/images/photo3.jpeg";
-import book4Image from "./../../assets/images/photo4.jpeg";
-import book5Image from "./../../assets/images/photo5.jpeg";
+const BooksView = () => {
+  const [newBooks, setNewBooks] = useState(null);
+  useEffect(() => {
+    const getRecentBooks = async () => {
+      try {
+        const req = await axios.get("http://localhost:4000/book/recent");
+        const data = req.data.data.recentBooks;
+        setNewBooks(data);
+      } catch (error) {
+        console.error("Error fetching book details:", error);
+      }
+    };
+    getRecentBooks();
+  });
 
-const BooksView = ({ books }) => {
-  // Define image URLs
-  const images = [book1Image, book2Image, book3Image, book4Image, book5Image];
+  // Ref for the container
+  const containerRef = useRef(null);
+
+  // Function to scroll left
+  const handleScrollLeft = () => {
+    console.log("left");
+    containerRef.current.scrollLeft -= 200; // Adjust the scroll amount as needed
+  };
+
+  // Function to scroll right
+  const handleScrollRight = () => {
+    console.log("right");
+    containerRef.current.scrollLeft += 200; // Adjust the scroll amount as needed
+  };
 
   return (
-    <section className="most-books">
+    <section className="most-books mt-0">
       <div className="container" id="Scicence">
         <div className="row-reverse">
           <div className="col-md-12">
-            <h2>
-              NEW <b>Books</b>
+            <h2
+              className="text-center mt-5 p-5 mb-5"
+              style={{ color: "#DD4124", fontSize: "2.5rem" }}
+            >
+              <b>Recently Added</b>
             </h2>
           </div>
-          <div className="books">
-            {images.map((image, index) => (
-              <BookItem key={index} index={index} image={image} />
-            ))}
+          <div className="books-container">
+            {/* Conditional rendering of scroll buttons */}
+            <button className="scroll-button left" onClick={handleScrollLeft}>
+              <i class="fa-solid fa-arrow-left"></i>{" "}
+            </button>
+            <button className="scroll-button right" onClick={handleScrollRight}>
+              <i class="fa-solid fa-arrow-right"></i>
+            </button>
+            {/* Conditional rendering of scroll buttons */}
+            <div className="books" ref={containerRef}>
+              {/* Render book items */}
+              {newBooks
+                ? newBooks.map((book, index) => (
+                    <BookItem
+                      key={index}
+                      index={book.id}
+                      image={book.bookImage.url}
+                    />
+                  ))
+                : null}
+            </div>
           </div>
         </div>
       </div>
@@ -51,7 +91,7 @@ const BookItem = ({ index, image }) => {
       transition={{ delay: index * 0.2, duration: 0.9 }} // Reduced transition duration to make animation faster
       whileHover={{ scale: 1.1, zIndex: 1 }} // Increase size and move to front on hover
     >
-      <Link to={`/bookdetails/${index + 1}`}>
+      <Link to={`/bookdetails/${index}`}>
         <img src={image} alt={`book-${index}`} loading="lazy" />
       </Link>
     </motion.div>

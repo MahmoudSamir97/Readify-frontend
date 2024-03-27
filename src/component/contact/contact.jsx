@@ -8,6 +8,8 @@ import {
 } from "@fortawesome/free-brands-svg-icons";
 import "./contact.css"; // Import your external CSS file for styling
 import contactImage from "../../assets/images/img8.jpeg"; // Import the image
+import { Alert, Snackbar } from "@mui/material";
+import axios from "axios";
 
 const ContactUs = () => {
   const [formData, setFormData] = useState({
@@ -15,6 +17,15 @@ const ContactUs = () => {
     email: "",
     message: "",
   });
+  // snackbar
+  const [open, setOpen] = useState(false);
+  const handleClose = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+    setOpen(false);
+  };
+  // snackbar
   const [errors, setErrors] = useState({});
   const [successMessage, setSuccessMessage] = useState(""); // State for success message
   const navigate = useNavigate();
@@ -24,24 +35,11 @@ const ContactUs = () => {
     e.preventDefault();
     if (validateForm()) {
       try {
-        const response = await fetch("http://localhost:4000/contact", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            userName: formData.name,
-            email: formData.email,
-            message: formData.message,
-          }),
+        const response = await axios.post("http://localhost:4000/contact", {
+          userName: formData.name,
+          email: formData.email,
+          message: formData.message,
         });
-
-        if (!response.ok) {
-          throw new Error("Failed to send message");
-        }
-
-        const data = await response.json();
-        console.log("Form submitted successfully!", data);
         setSuccessMessage("Your message has been sent successfully!");
         setFormData({
           name: "",
@@ -49,9 +47,9 @@ const ContactUs = () => {
           message: "",
         });
         setErrors({});
+        setOpen(true);
       } catch (error) {
         console.error("Error:", error);
-        // Handle error here, maybe display an error message to the user
       }
     } else {
       console.log("Form validation failed!");
@@ -109,11 +107,6 @@ const ContactUs = () => {
     <div className="contact-page">
       <div className="contact-content">
         <h2>Send Us a Message</h2>
-        {successMessage && (
-          <p className="success-message bg-success p-3 text-white w-50 rounded-3">
-            {successMessage}
-          </p>
-        )}
         <form onSubmit={handleSubmit}>
           <div className="mb-3">
             <label htmlFor="name" className="form-label">
@@ -186,8 +179,19 @@ const ContactUs = () => {
         </div>
       </div>
       <div className="contact-image">
-        <img src={contactImage} alt="Contact Image" />
+        <img src={contactImage} alt="Contact" />
       </div>
+      <Snackbar
+        open={open}
+        autoHideDuration={6000}
+        onClose={handleClose}
+        anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
+        sx={{ bottom: { xs: 90, sm: 50 } }} // Adjust the bottom position based on viewport size
+      >
+        <Alert onClose={handleClose} severity="success" sx={{ width: "100%" }}>
+          Message sent successfully!
+        </Alert>
+      </Snackbar>
     </div>
   );
 };

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { motion } from "framer-motion";
 import "./aboutus.css";
 
@@ -9,6 +9,8 @@ import img3 from "../../assets/images/img3.jpg";
 import img4 from "../../assets/images/img4.jpg";
 import img5 from "../../assets/images/img5.jpg";
 import img7 from "../../assets/images/img7.jpg";
+import axios from "axios";
+import { Alert, Snackbar } from "@mui/material";
 
 const AboutUs = () => {
   const teamMembers = [
@@ -43,10 +45,46 @@ const AboutUs = () => {
       imageUrl: img5,
     },
   ];
+  // snackbar
+  const [subscribedEmail, setsubscribedEmail] = useState("");
+  console.log(subscribedEmail);
+  const [open, setOpen] = useState(false);
+  const [done, setDone] = useState(false);
+  const handleClose = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+    setOpen(false);
+  };
+  // snackbar
+  const handleSubmitSubscribtion = async () => {
+    try {
+      if (done) {
+        setDone(false);
+      } else {
+        await axios.post("http://localhost:4000/subscribtion", {
+          email: subscribedEmail,
+        });
+        setOpen(true);
+        setDone(true);
+      }
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  };
 
   return (
-    <div>
-      <h2 className="mx-3 mt-3 mb-6">Who We Are</h2>
+    <div className="p-5 about-section-main">
+      {/* quote */}
+      <div className="quooote">
+        <blockquote>
+          Books are the plane, and the train, and the road. They are the
+          destination, and the journey. They are home.
+        </blockquote>
+        <cite>Anna Quindlen</cite>
+      </div>
+      {/* quote */}
+      <h2 className="mx-3 mt-3 mb-5">Who We Are</h2>
 
       <motion.div
         className="about mx-auto"
@@ -118,11 +156,10 @@ const AboutUs = () => {
         </div>
       </motion.div>
 
-      <h2 className="mx-3 mt-3 mb-4">Our Team</h2>
+      <h2 className="mx-3 mt-5 mb-5">Our Team</h2>
       <div
         className="about mx-auto team-container"
         style={{
-          backgroundColor: "#f0f0f0",
           padding: "20px",
           borderRadius: "10px",
         }}
@@ -163,12 +200,73 @@ const AboutUs = () => {
                 <p style={{ color: "#666", marginBottom: "9px" }}>
                   {member.position}
                 </p>
-                <p style={{ color: "#777" }}>{member.description}</p>
               </div>
             </div>
           </motion.div>
         ))}
       </div>
+      {/* subscribe to our email section */}
+      <div className="main-subscribe-container p-5 mb-5 ">
+        <div className="info mb-4">
+          <h5 style={{ color: "#E9897E" }}>Subscribe for latest news</h5>
+        </div>
+        <div className="container-subscribe">
+          <div className="content">
+            {done ? (
+              <form className="subscription done">
+                <input
+                  className="add-email"
+                  type="email"
+                  placeholder="subscribe@me.now"
+                />
+                <button
+                  className="submit-email"
+                  type="button"
+                  onClick={handleSubmitSubscribtion}
+                >
+                  <span className="before-submit">Subscribe</span>
+                  <span className="after-submit">
+                    Thank you for subscribing!
+                  </span>
+                </button>
+              </form>
+            ) : (
+              <form className="subscription">
+                <input
+                  className="add-email"
+                  type="email"
+                  name="email"
+                  value={subscribedEmail}
+                  onChange={(e) => setsubscribedEmail(e.target.value)}
+                  placeholder="subscribe@me.now"
+                />
+                <button
+                  className="submit-email"
+                  type="button"
+                  onClick={handleSubmitSubscribtion}
+                >
+                  <span className="before-submit">Subscribe</span>
+                  <span className="after-submit">
+                    Thank you for subscribing!
+                  </span>
+                </button>
+              </form>
+            )}
+          </div>
+        </div>
+      </div>
+      {/* subscribe to our email section */}
+      <Snackbar
+        open={open}
+        autoHideDuration={6000}
+        onClose={handleClose}
+        anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
+        sx={{ bottom: { xs: 90, sm: 50 } }} // Adjust the bottom position based on viewport size
+      >
+        <Alert onClose={handleClose} severity="success" sx={{ width: "100%" }}>
+          Message sent successfully!
+        </Alert>
+      </Snackbar>
     </div>
   );
 };

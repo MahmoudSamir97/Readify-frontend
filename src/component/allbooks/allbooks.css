@@ -1,36 +1,41 @@
 /* allbooks.css */
 
 body {
-  background-color: #ffffff; /* White background color */
+  background-color: #ffffff;
 }
-
+.custom-filter {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: black !important;
+}
 .most-books {
   background-color: #ffffff; /* White background color */
   padding-bottom: 20px;
 }
 
-.books {
+.books-all {
   display: grid;
   grid-template-columns: repeat(4, 1fr); /* Four books per row */
-  gap: 20px; /* Space between each book */
+  gap: 40px; /* Space between each book */
   justify-items: center; /* Center items horizontally */
 }
 
-.book {
-  width: 100%; /* Take full width of its container */
-  box-shadow: 20px 20px 20px -2px rgba(0, 0, 0, 0.42);
-  background-color: whitesmoke;
-  position: relative; /* Added for positioning cart icon */
+.book-all {
+  width: 100%;
+  height: 318px;
+  padding: 1rem;
+  position: relative;
 }
 
 .shop-item-image {
   position: relative;
+  height: 100%;
 }
 
 .shop-item-image img {
   display: block;
   width: 100%;
-  height: auto;
+  height: 100%;
   border-radius: 10px;
   cursor: pointer;
 }
@@ -65,7 +70,7 @@ body {
 }
 
 @media screen and (max-width: 768px) {
-  .books {
+  .books-all {
     grid-template-columns: repeat(
       2,
       1fr
@@ -74,7 +79,7 @@ body {
 }
 
 @media screen and (max-width: 480px) {
-  .books {
+  .books-all {
     grid-template-columns: repeat(
       1,
       1fr
@@ -96,7 +101,7 @@ body {
   transition: opacity 0.3s ease; /* Smooth transition effect */
 }
 
-.book:hover .transparent-div {
+.book-all:hover .transparent-div {
   opacity: 1; /* Show the transparent div on hover */
 }
 

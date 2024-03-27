@@ -1,4 +1,4 @@
-/* carousel */
+/* carousel
 
 .Newbooks {
   background-color: rgb(255, 255, 255);
@@ -17,17 +17,14 @@
   border-radius: 5px;
 }
 
-/* newbooks.css */
 
 .item {
   min-height: 6rem;
   min-width: 14rem;
   box-shadow: 20px 20px 20px -2px rgba(0, 0, 0, 0.42);
   background-color: whitesmoke;
-  margin: 80px; /* Adjust the margin as needed for more space between books */
+  margin: 80px; 
 }
-
-/* end of newbooks */
 
 .item img {
   display: block;
@@ -96,6 +93,128 @@
   .star-rating i {
     font-size: 14px;
   }
+} */
+
+/* from booksview */
+.most-books {
+  background-color: rgb(255, 255, 255);
+  margin-bottom: 7rem;
+}
+.most-books .books {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin: 20px auto;
+}
+.book {
+  height: 318px;
 }
 
-/* end of newbooks */
+.most-books .books .book {
+  width: 17%;
+}
+
+.most-books .book img {
+  border: 2px solid #d9d9d9;
+  border: 0.5px solid #d2d2d2;
+  border-radius: 10px;
+  padding: 4px;
+  width: 100%;
+  height: 100%;
+  cursor: pointer;
+  transition: 0.2s transform ease-in-out;
+}
+
+.most-books .book img:hover {
+  background-color: #ffffff;
+}
+
+.most-books .book .thumb-content {
+  margin-top: 2px;
+  padding: 0 8px;
+  display: flex;
+  justify-content: space-between;
+}
+.most-books .book .thumb-content h5 {
+  color: #000001;
+  font-family: sans-serif;
+  font-size: 16px;
+}
+.most-books .book .thumb-content .item-price strike {
+  color: #313335;
+}
+.most-books .book .thumb-content .item-price span {
+  color: #00b90f;
+}
+
+@media (min-width: 769px) and (max-width: 1024px) {
+  .most-books .book {
+    min-height: 8rem;
+    min-width: 10rem;
+  }
+  .seemore-Btn {
+    font-size: 12px;
+    margin: 0 0 10px 500px;
+  }
+}
+
+@media (min-width: 1025px) and (max-width: 1200px) {
+  .seemore-Btn {
+    font-size: 12px;
+    margin: 0 0 10px 600px;
+  }
+}
+
+@media screen and (min-width: 300px) and (max-width: 600px) {
+  .most-books .books .book {
+    width: 40%;
+    margin-bottom: 5px;
+  }
+  .seemore-Btn {
+    font-size: 13px;
+    margin: 40px 0 10px 220px;
+  }
+}
+
+.most-books {
+  overflow: hidden;
+}
+
+.books-container {
+  position: relative;
+  overflow-x: hidden;
+}
+
+.scroll-button {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: rgba(0, 0, 0, 0.5);
+  color: white;
+  border: none;
+  cursor: pointer;
+  padding: 10px;
+  z-index: 1;
+}
+
+.scroll-button.left {
+  left: 0;
+}
+
+.scroll-button.right {
+  right: 0;
+}
+
+.most-books .books {
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 20px;
+  overflow-x: hidden;
+  padding-bottom: 20px;
+}
+
+.most-books .books .book {
+  flex: 0 0 auto;
+}
+
+/* from books view */

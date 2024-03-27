@@ -1,3 +1,7 @@
+.about-section-main {
+  background-color: #f1efe6;
+}
+
 .about {
   display: flex;
   flex-wrap: wrap;
@@ -8,9 +12,7 @@
   padding: 20px;
   margin-bottom: 40px;
   text-align: center;
-  
 }
-
 
 .about-item {
   width: 90%; /* Change width to 100% to take up full width */
@@ -52,7 +54,6 @@
 .next-arrow {
   right: 20px;
 }
-
 
 .cards-container {
   display: in;
@@ -108,4 +109,143 @@
   object-fit: cover; /* Ensure the image covers the entire card */
 }
 
+/* subscribe to our email section */
+.container-subscribe {
+  width: 100%;
+  height: 100%;
+}
 
+.content {
+  width: 360px;
+  height: 40px;
+  box-shadow: 2px 4px 10px rgba(0, 0, 0, 0.2);
+  border-radius: 60px;
+  overflow: hidden;
+}
+
+.subscription {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.subscription .add-email {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border: none;
+  outline: none;
+  padding: 0 20px;
+}
+
+.subscription .submit-email {
+  position: absolute;
+  top: 0;
+  right: 0;
+  height: calc(100% - 2px);
+  width: 100px;
+  border: none;
+  border-radius: 60px;
+  outline: none;
+  margin: 1px;
+  padding: 0 20px;
+  cursor: pointer;
+  background: #4abebb;
+  color: #ffffff;
+  transition: width 0.35s ease-in-out, background 0.35s ease-in-out;
+}
+.subscription .submit-email:hover {
+  background: #dc3545;
+}
+
+.subscription.done .submit-email {
+  width: calc(100% - 2px);
+  background: #c0e02e;
+}
+
+.subscription .submit-email .before-submit,
+.subscription .submit-email .after-submit {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  line-height: 38px;
+  transition: visibility 0.35s ease-in-out, opacity 0.35s ease-in-out;
+}
+
+.subscription.done .submit-email .before-submit,
+.subscription:not(.done) .submit-email .after-submit {
+  visibility: hidden;
+  opacity: 0;
+}
+
+.subscription .submit-email .after-submit {
+  transition-delay: 0.35s;
+}
+
+.subscription:not(.done) .submit-email .before-submit,
+.subscription.done .submit-email .after-submit {
+  visibility: visible;
+  opacity: 1;
+}
+
+/* quote */
+@import url("https://fonts.googleapis.com/css?family=Special+Elite");
+
+/* html, body {
+	height: 100%;
+	margin: 0;
+} */
+
+.quooote {
+  font-family: "Special Elite", cursive;
+  /* background: #fffdf5; */
+  color: #3f3f5a;
+  display: flex;
+  padding: 1rem;
+  margin-bottom: 3rem;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+blockquote {
+  font-weight: 100;
+  font-size: 2rem;
+  max-width: 600px;
+  line-height: 1.4;
+  position: relative;
+  margin: 0;
+  padding: 0.5rem;
+}
+
+blockquote:before,
+blockquote:after {
+  position: absolute;
+  color: #f1efe6;
+  font-size: 8rem;
+  width: 4rem;
+  height: 4rem;
+}
+
+blockquote:before {
+  content: "“";
+  left: -5rem;
+  top: -2rem;
+}
+
+blockquote:after {
+  content: "”";
+  right: -5rem;
+  bottom: 1rem;
+}
+
+cite {
+  line-height: 3;
+  text-align: left;
+}
+/* quote */

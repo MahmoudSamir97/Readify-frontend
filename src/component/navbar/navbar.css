@@ -2,11 +2,11 @@
 @import url("https://fonts.googleapis.com/css2?family=Sansita+Swashed:wght@300&display=swap");
 
 /* Global styles */
-* {
+/* * {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
-}
+} */
 .logo {
   width: 30px;
   height: 30px;
@@ -14,8 +14,9 @@
 
 /* Navbar */
 .navbar {
-  background-color: #d8cbbb; /* Replace 'your-color' with the desired color */
-  padding: 10px 20px; /* Adjust padding as needed */
+  background-color: #cccbc7;
+  /* background-color: #d8cbbb; */
+  padding: 10px 20px;
 }
 
 .nav-link {
@@ -82,5 +83,14 @@
   height: 15px; /* Adjust as needed */
 }
 
-.wishlink {
+#basic-nav-dropdown::after {
+  color: "";
+}
+
+ul.dropdown-menu[data-bs-popper] {
+  left: unset !important; /* Reset left positioning */
+  right: 0; /* Position the dropdown to the right */
+}
+.custom-ul {
+  margin-left: 12rem !important;
 }

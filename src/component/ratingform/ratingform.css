@@ -40,28 +40,3 @@ textarea {
   border-radius: 5px;
   margin-bottom: 20px;
 }
-
-.btn-primary,
-.btn-secondary {
-  width: 100%;
-  padding: 10px;
-  font-size: 16px;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-}
-
-.btn-primary {
-  background-color: #af460f !important; /* Set background color for primary button */
-  color: #fff; /* Set text color for primary button */
-}
-
-.btn-secondary {
-  background-color: #c7b198 !important; /* Set background color for secondary button */
-  color: #fff; /* Set text color for secondary button */
-}
-
-.btn-primary:hover,
-.btn-secondary:hover {
-  opacity: 0.8;
-}

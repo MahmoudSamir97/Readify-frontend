@@ -2,7 +2,9 @@ import React, { useState } from "react";
 import { useFormik } from "formik";
 import axios from "axios";
 import * as Yup from "yup";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import img from "./../../assets/images/top-view-books-with-copy-space.jpg";
+import "./Register.css";
 
 function Register() {
   // STATE
@@ -51,6 +53,7 @@ function Register() {
     onSubmit: register,
   });
   //   REGISTER
+  let navigate = useNavigate();
   async function register(value) {
     try {
       const res = await axios.post("http://127.0.0.1:4000/auth/signup", value);
@@ -60,6 +63,9 @@ function Register() {
       } else {
         console.log("Registration successful");
         setIsRegistered(true);
+        setTimeout(() => {
+          navigate("/login");
+        }, 1000);
       }
     } catch (error) {
       if (error.response.data.status === "fail") {
@@ -67,199 +73,210 @@ function Register() {
       }
     }
   }
-
+  // d-flex align-items-center
   return (
-    <form
-      className="mask d-flex align-items-center  gradient-custom-3"
-      onSubmit={registerForm.handleSubmit}
-    >
-      <div className="container">
-        <div className="row d-flex justify-content-center align-items-center ">
-          <div className="col-12 col-md-9 col-lg-7 col-xl-6">
-            <div style={{ borderRadius: 15 }}>
-              <div className="p-5">
-                <h2 className="text-uppercase text-center mb-5">
-                  Create an account
-                </h2>
-                <div>
-                  <div className="form-outline mb-4">
-                    <input
-                      type="text"
-                      placeholder="first name"
-                      value={registerForm.values.firstName}
-                      onChange={registerForm.handleChange}
-                      onBlur={registerForm.handleBlur}
-                      name="firstName"
-                      id="firstName"
-                      className="form-control form-control-lg mb-0"
-                    />
-                    {registerForm.errors.firstName &&
-                    registerForm.touched.firstName ? (
-                      <div className=" alert-danger p-2">
-                        {registerForm.errors.firstName}
-                      </div>
-                    ) : null}
-                  </div>
-                  {/* new input */}
-                  <div className="form-outline mb-4">
-                    <input
-                      placeholder="last name"
-                      type="text"
-                      value={registerForm.values.lastName}
-                      name="lastName"
-                      onChange={registerForm.handleChange}
-                      onBlur={registerForm.handleBlur}
-                      id="lastName"
-                      className="form-control form-control-lg mb-0"
-                    />
-                    {registerForm.errors.lastName &&
-                    registerForm.touched.lastName ? (
-                      <div className=" alert-danger p-2">
-                        {registerForm.errors.lastName}
-                      </div>
-                    ) : null}
-                  </div>
-                  {/* new input */}
-                  <div className="form-outline mb-4">
-                    <input
-                      placeholder="user name"
-                      type="text"
-                      value={registerForm.values.userName}
-                      name="userName"
-                      onChange={registerForm.handleChange}
-                      onBlur={registerForm.handleBlur}
-                      id="userName"
-                      className="form-control form-control-lg mb-0"
-                    />
-                    {registerForm.errors.userName &&
-                    registerForm.touched.userName ? (
-                      <div className=" alert-danger p-2">
-                        {registerForm.errors.userName}
-                      </div>
-                    ) : null}
-                  </div>
-                  {/* new input */}
-                  <div className="form-outline mb-4">
-                    <input
-                      placeholder="email"
-                      type="email"
-                      value={registerForm.values.email}
-                      name="email"
-                      onChange={registerForm.handleChange}
-                      onBlur={registerForm.handleBlur}
-                      id="email"
-                      className="form-control form-control-lg mb-0"
-                    />
-                    {registerForm.errors.email && registerForm.touched.email ? (
-                      <div className="alert-danger p-2">
-                        {registerForm.errors.email}
-                      </div>
-                    ) : null}
-                  </div>
-                  <div className="form-outline mb-4">
-                    <input
-                      placeholder="password"
-                      type="password"
-                      value={registerForm.values.password}
-                      name="password"
-                      onChange={registerForm.handleChange}
-                      onBlur={registerForm.handleBlur}
-                      id="password"
-                      className="form-control form-control-lg mb-0"
-                    />
-                    {registerForm.errors.password &&
-                    registerForm.touched.password ? (
-                      <div className="alert-danger p-2">
-                        {registerForm.errors.password}
-                      </div>
-                    ) : null}
-                  </div>
-                  <div className="form-outline mb-4">
-                    <input
-                      placeholder="Repeat your password"
-                      type="password"
-                      value={registerForm.values.repeatedPassword}
-                      name="repeatedPassword"
-                      onChange={registerForm.handleChange}
-                      onBlur={registerForm.handleBlur}
-                      id="repeatedPassword"
-                      className="form-control form-control-lg mb-0"
-                    />
-                    {registerForm.errors.repeatedPassword &&
-                    registerForm.touched.repeatedPassword ? (
-                      <div className="alert-danger p-2">
-                        {registerForm.errors.repeatedPassword}
-                      </div>
-                    ) : null}
-                  </div>
-                  <div className="form-outline mb-4">
-                    <input
-                      type="tel"
-                      id="phoneNumber"
-                      placeholder="Phone number"
-                      value={registerForm.values.phoneNumber}
-                      name="phoneNumber"
-                      onChange={registerForm.handleChange}
-                      onBlur={registerForm.handleBlur}
-                      className="form-control form-control-lg mb-0"
-                    />
-                    {registerForm.errors.phoneNumber &&
-                    registerForm.touched.phoneNumber ? (
-                      <div className="alert-danger p-2">
-                        {registerForm.errors.phoneNumber}
-                      </div>
-                    ) : null}
-                  </div>
-                  <div className="form-outline mb-4">
-                    <label className="form-label" htmlFor="dateOfBirth">
-                      Birthdate
-                    </label>
-                    <input
-                      type="date"
-                      id="dateOfBirth"
-                      value={registerForm.values.dateOfBirth}
-                      name="dateOfBirth"
-                      onChange={registerForm.handleChange}
-                      onBlur={registerForm.handleBlur}
-                      className="form-control form-control-lg mb-0"
-                    />
-                    {registerForm.errors.dateOfBirth &&
-                    registerForm.touched.dateOfBirth ? (
-                      <div className="alert-danger p-2">
-                        {registerForm.errors.dateOfBirth}
-                      </div>
-                    ) : null}
-                  </div>
-                  {error && (
-                    <div className="alert-danger p-2 mb-2">{error}</div>
-                  )}
-
-                  <div className="d-flex flex-direction-column justify-content-center">
-                    <button
-                      type="submit"
-                      className="btn btn-success btn-block btn-lg gradient-custom-4 text-white"
+    <div className="row">
+      <div className="col-md-6 ">
+        <img src={img} alt="shelf book" className="w-100 custom-img " />
+      </div>
+      <div className="col-md-6">
+        <form
+          className="mask gradient-custom-3 form"
+          onSubmit={registerForm.handleSubmit}
+        >
+          <div className="container">
+            <div className="row d-flex justify-content-center align-items-center ">
+              <div className="col-12 ">
+                <div style={{ borderRadius: 15 }}>
+                  <div className="p-5">
+                    <h2
+                      className="text-uppercase text-center mb-5"
+                      style={{ color: "#3c6478" }}
                     >
-                      Register
-                    </button>
-                  </div>
-                  {isRegistered ? (
-                    <div className="text-success text-center mt-3 mb-0 ">
-                      verification email sent!
+                      Create an account
+                    </h2>
+                    <div>
+                      <div className="form-outline mb-4">
+                        <input
+                          type="text"
+                          placeholder="first name"
+                          value={registerForm.values.firstName}
+                          onChange={registerForm.handleChange}
+                          onBlur={registerForm.handleBlur}
+                          name="firstName"
+                          id="firstName"
+                          className="form-control form-control-lg mb-0"
+                        />
+                        {registerForm.errors.firstName &&
+                        registerForm.touched.firstName ? (
+                          <div className=" alert-danger p-2">
+                            {registerForm.errors.firstName}
+                          </div>
+                        ) : null}
+                      </div>
+                      {/* new input */}
+                      <div className="form-outline mb-4">
+                        <input
+                          placeholder="last name"
+                          type="text"
+                          value={registerForm.values.lastName}
+                          name="lastName"
+                          onChange={registerForm.handleChange}
+                          onBlur={registerForm.handleBlur}
+                          id="lastName"
+                          className="form-control form-control-lg mb-0"
+                        />
+                        {registerForm.errors.lastName &&
+                        registerForm.touched.lastName ? (
+                          <div className=" alert-danger p-2">
+                            {registerForm.errors.lastName}
+                          </div>
+                        ) : null}
+                      </div>
+                      {/* new input */}
+                      <div className="form-outline mb-4">
+                        <input
+                          placeholder="user name"
+                          type="text"
+                          value={registerForm.values.userName}
+                          name="userName"
+                          onChange={registerForm.handleChange}
+                          onBlur={registerForm.handleBlur}
+                          id="userName"
+                          className="form-control form-control-lg mb-0"
+                        />
+                        {registerForm.errors.userName &&
+                        registerForm.touched.userName ? (
+                          <div className=" alert-danger p-2">
+                            {registerForm.errors.userName}
+                          </div>
+                        ) : null}
+                      </div>
+                      {/* new input */}
+                      <div className="form-outline mb-4">
+                        <input
+                          placeholder="email"
+                          type="email"
+                          value={registerForm.values.email}
+                          name="email"
+                          onChange={registerForm.handleChange}
+                          onBlur={registerForm.handleBlur}
+                          id="email"
+                          className="form-control form-control-lg mb-0"
+                        />
+                        {registerForm.errors.email &&
+                        registerForm.touched.email ? (
+                          <div className="alert-danger p-2">
+                            {registerForm.errors.email}
+                          </div>
+                        ) : null}
+                      </div>
+                      <div className="form-outline mb-4">
+                        <input
+                          placeholder="password"
+                          type="password"
+                          value={registerForm.values.password}
+                          name="password"
+                          onChange={registerForm.handleChange}
+                          onBlur={registerForm.handleBlur}
+                          id="password"
+                          className="form-control form-control-lg mb-0"
+                        />
+                        {registerForm.errors.password &&
+                        registerForm.touched.password ? (
+                          <div className="alert-danger p-2">
+                            {registerForm.errors.password}
+                          </div>
+                        ) : null}
+                      </div>
+                      <div className="form-outline mb-4">
+                        <input
+                          placeholder="Repeat your password"
+                          type="password"
+                          value={registerForm.values.repeatedPassword}
+                          name="repeatedPassword"
+                          onChange={registerForm.handleChange}
+                          onBlur={registerForm.handleBlur}
+                          id="repeatedPassword"
+                          className="form-control form-control-lg mb-0"
+                        />
+                        {registerForm.errors.repeatedPassword &&
+                        registerForm.touched.repeatedPassword ? (
+                          <div className="alert-danger p-2">
+                            {registerForm.errors.repeatedPassword}
+                          </div>
+                        ) : null}
+                      </div>
+                      <div className="form-outline mb-4">
+                        <input
+                          type="tel"
+                          id="phoneNumber"
+                          placeholder="Phone number"
+                          value={registerForm.values.phoneNumber}
+                          name="phoneNumber"
+                          onChange={registerForm.handleChange}
+                          onBlur={registerForm.handleBlur}
+                          className="form-control form-control-lg mb-0"
+                        />
+                        {registerForm.errors.phoneNumber &&
+                        registerForm.touched.phoneNumber ? (
+                          <div className="alert-danger p-2">
+                            {registerForm.errors.phoneNumber}
+                          </div>
+                        ) : null}
+                      </div>
+                      <div className="form-outline mb-4">
+                        <label className="form-label" htmlFor="dateOfBirth">
+                          Birthdate
+                        </label>
+                        <input
+                          type="date"
+                          id="dateOfBirth"
+                          value={registerForm.values.dateOfBirth}
+                          name="dateOfBirth"
+                          onChange={registerForm.handleChange}
+                          onBlur={registerForm.handleBlur}
+                          className="form-control form-control-lg mb-0"
+                        />
+                        {registerForm.errors.dateOfBirth &&
+                        registerForm.touched.dateOfBirth ? (
+                          <div className="alert-danger p-2">
+                            {registerForm.errors.dateOfBirth}
+                          </div>
+                        ) : null}
+                      </div>
+                      {error && (
+                        <div className="alert-danger p-2 mb-2">{error}</div>
+                      )}
+
+                      <div className="d-flex flex-direction-column justify-content-center">
+                        <button
+                          type="submit"
+                          className="btn btn-secondary btn-block btn-lg gradient-custom-4 text-white"
+                        >
+                          Register
+                        </button>
+                      </div>
+                      {isRegistered ? (
+                        <div className="text-success text-center mt-3 mb-0 ">
+                          verification email sent!
+                        </div>
+                      ) : null}
+                      <p className="text-center text-muted mt-3 mb-0">
+                        Have already an account?
+                        <Link to={"/login"} className="fw-bold text-body">
+                          Login Here
+                        </Link>
+                      </p>
                     </div>
-                  ) : null}
-                  <p className="text-center text-muted mt-1 mb-0">
-                    Have already an account?
-                    <Link to={"/login"} className="fw-bold text-body">
-                      Login Here
-                    </Link>
-                  </p>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
+        </form>
       </div>
-    </form>
+    </div>
   );
 }
 

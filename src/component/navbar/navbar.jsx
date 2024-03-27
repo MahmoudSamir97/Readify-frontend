@@ -1,40 +1,20 @@
-import React, { useState, useEffect, useRef, useContext } from "react";
-import { NavLink, Link } from "react-router-dom";
+import React, { useEffect, useRef, useContext } from "react";
+import { NavLink, Link, useNavigate } from "react-router-dom";
 import "./navbar.css";
 import useSticky from "./useSticky";
 import logo from "./../../assets/images/icons8-book-48.png";
-import DropDown from "../DropDown/DropDown";
-import { imageContext } from "../Context/ProfileImageContext";
-// dropdown images
-import userImg from "./../../assets/images/dropdown/user.png";
-import edit from "./../../assets/images/dropdown/edit.png";
-import settings from "./../../assets/images/dropdown/settings.png";
-import help from "./../../assets/images/dropdown/question.png";
-import logout from "./../../assets/images/dropdown/log-out.png";
 
 const Navbar = () => {
   const { sticky, stickyRef } = useSticky();
-  const [open, setOpen] = useState(false);
-  const { profileImage } = useContext(imageContext);
-  let menuRef = useRef();
-  useEffect(() => {
-    console.log(profileImage); // This will only execute once when the component mounts
-  }, [profileImage]);
+  const token = localStorage.getItem("token");
+  let navigate = useNavigate();
+  //
 
-  useEffect(() => {
-    let handler = (e) => {
-      if (!menuRef.current.contains(e.target)) {
-        setOpen(false);
-      }
-    };
-
-    document.addEventListener("mousedown", handler);
-
-    return () => {
-      document.removeEventListener("mousedown", handler);
-    };
-  });
-
+  const handleLogOut = () => {
+    localStorage.removeItem("token");
+    navigate("/login");
+  };
+  //
   return (
     <>
       <nav
@@ -45,7 +25,7 @@ const Navbar = () => {
             : "navbar navbar-expand-lg  navbar-light shadow"
         }
       >
-        <div className="container d-flex justify-content-between align-items-center">
+        <div className="container-fluid w-100 d-flex justify-content-between align-items-center">
           <Link
             className="navbar-brand text-danger logo h1 align-self-center"
             to={"/"}
@@ -55,7 +35,7 @@ const Navbar = () => {
           </Link>
 
           <div
-            className="navbar-toggler custom-toggler"
+            className="navbar-toggler custom-toggler "
             type="button"
             data-bs-toggle="collapse"
             data-bs-target="#navbarNav"
@@ -71,7 +51,7 @@ const Navbar = () => {
             id="navbarNav"
           >
             <div className="flex-fill">
-              <ul className="nav navbar-nav d-lg-inline-flex  mx-lg-5">
+              <ul className="nav navbar-nav d-lg-inline-flex custom-ul  mx-lg-5">
                 <li className="nav-item mx-lg-4">
                   <Link className="nav-link" aria-current="page" to={"/"}>
                     Home
@@ -94,58 +74,67 @@ const Navbar = () => {
                     About us
                   </Link>
                 </li>
-                <li className="nav-item mx-lg-4">
-                  <Link className="nav-link" to={"/login"}>
-                    Login
-                  </Link>
-                </li>
+                {token ? null : (
+                  <li className="nav-item mx-lg-4">
+                    <Link className="nav-link" to={"/login"}>
+                      Login
+                    </Link>
+                  </li>
+                )}
               </ul>
             </div>
-
-            <div className="d-flex">
-              <NavLink
-                className="nav-icon position-relative mt-2 text-decoration-none ms-3"
-                to={"./shoppingcart"}
-              >
-                <i className="fa fa-fw fa-cart-arrow-down text-dark" />
-                <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-light text-dark"></span>
-              </NavLink>
-              <NavLink className="nav-link wishlink" to={"/wishlist"}>
-                <i className="fas fa-heart text-danger"></i>
-              </NavLink>
-              {/* drop down here */}
-              <div className="menu-container" ref={menuRef}>
-                <div
-                  className="menu-trigger"
-                  onClick={() => {
-                    setOpen(!open);
-                  }}
+            {token ? (
+              <div className="d-flex">
+                <NavLink
+                  className="nav-icon position-relative mt-2 text-decoration-none me-2  "
+                  to={"./shoppingcart"}
                 >
-                  <img src={userImg} alt="user" />
-                </div>
+                  <i className="fa fa-fw fa-cart-arrow-down text-dark" />
+                  <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-light text-dark"></span>
+                </NavLink>
 
-                <div
-                  className={`dropdown-menu ${open ? "active" : "inactive"}`}
+                <NavLink
+                  className="nav-icon position-relative mt-2 text-decoration-none ms-3 "
+                  to={"/wishlist"}
                 >
-                  {/* <h3 className="dropdown-title">Mahmoudsamir</h3> */}
-                  <ul className="dropdown-list">
-                    <DropDown
-                      img={edit}
-                      text={"Edit Profile"}
-                      link={"/edit-profile"}
-                    />
-                    <DropDown
-                      img={settings}
-                      text={"Password"}
-                      link={"/change-password"}
-                    />
-                    <DropDown img={help} text={"Helps"} link={"/helps"} />
-                    <DropDown img={logout} text={"Logout"} link={"/login"} />
+                  <i className="fas fa-heart text-danger"></i>
+                  <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-light text-dark"></span>
+                </NavLink>
+
+                <div className="dropdown ">
+                  <button
+                    className="btn dropdown-toggle ms-2"
+                    type="button"
+                    data-bs-toggle="dropdown"
+                    aria-expanded="false"
+                  >
+                    Profile
+                    <i className="fa-regular fa-user d-inline-block ms-2"></i>
+                  </button>
+                  <ul className="dropdown-menu custom-ul">
+                    <li>
+                      <Link className="dropdown-item" to={"/edit-profile"}>
+                        Setting
+                      </Link>
+                    </li>
+                    <li>
+                      <Link className="dropdown-item" to={"/change-password"}>
+                        Change password
+                      </Link>
+                    </li>
+                    <li>
+                      <Link
+                        className="dropdown-item"
+                        to={"/login"}
+                        onClick={handleLogOut}
+                      >
+                        Logout
+                      </Link>
+                    </li>
                   </ul>
                 </div>
               </div>
-              {/* drop down here */}
-            </div>
+            ) : null}
           </div>
         </div>
       </nav>

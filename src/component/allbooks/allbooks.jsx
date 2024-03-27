@@ -85,42 +85,54 @@ const AllBooks = ({ setBooksData }) => {
 
   return (
     <>
-      <section className="module-small mt-5 most-books">
+      <section className="module-small mt-5 ">
         <div className="container">
-          <form className="row mx-auto">
-            <div className="col-sm-4 mb-3">
+          <form className="row mx-auto mb-5">
+            <div className="col-sm-6 mb-5 mt-5">
               {/* Category DropDownList Filter */}
-              <select
-                className="form-control"
-                value={selectedCategory}
-                onChange={handleCategoryChange}
-              >
-                <option value="All">All</option>
-                {categories.map((category) => (
-                  <option key={category._id} value={category._id}>
-                    {category.categoryName}
+              <div className="d-flex " style={{}}>
+                <label
+                  className="d-inline-block custom-filter me-5"
+                  htmlFor="filter"
+                >
+                  Filter by category
+                </label>
+                <select
+                  id="filter"
+                  style={{ color: "#999999", width: "250px" }}
+                  className="form-control"
+                  value={selectedCategory}
+                  onChange={handleCategoryChange}
+                >
+                  <option value="All" style={{ color: "#999999" }}>
+                    All
                   </option>
-                ))}
-              </select>
+                  {categories.map((category) => (
+                    <option
+                      style={{ color: "#999999" }}
+                      key={category._id}
+                      value={category._id}
+                    >
+                      {category.categoryName}
+                    </option>
+                  ))}
+                </select>
+              </div>
+
               {/* end Category DropDownList Filter */}
             </div>
             <div className="col-sm-4 mb-3"></div>
-            {/* <div className="col-sm-4 mb-3">
-              <button className="btn btn-outline-secondary" type="button">
-                Reset
-              </button>
-            </div> */}
           </form>
         </div>
       </section>
       <section className="module-large mx-auto most-books">
-        <div className="container books">
+        <div className="container books-all">
           {loading ? (
             <p>Loading...</p>
           ) : (
             allBooks.map((book, index) => (
               <motion.div
-                className="book"
+                className="book-all"
                 key={book.id}
                 initial={{ opacity: 0, y: 50 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -128,9 +140,8 @@ const AllBooks = ({ setBooksData }) => {
               >
                 <div className="shop-item-image">
                   <Link to={`./bookdetails/${book.id}`}>
-                    <img src={book.bookImage.url} alt="Image" />
+                    <img src={book.bookImage.url} alt="book" />
                   </Link>
-                  {book.bookTitle}
                   <div className="transparent-div">
                     <Link
                       className="detail-link"

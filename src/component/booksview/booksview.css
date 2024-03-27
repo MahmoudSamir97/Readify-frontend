@@ -1,26 +1,23 @@
 /* start of science  */
 .most-books {
   background-color: rgb(255, 255, 255);
+  margin-bottom: 7rem;
 }
 .most-books .books {
   display: flex;
   flex-direction: row;
-  justify-content: center;
-  flex-wrap: wrap;
   align-items: center;
   margin: 20px auto;
 }
 
 .most-books .books .book {
   width: 17%;
-  margin: 10px;
 }
 
 .most-books .book img {
   border: 2px solid #d9d9d9;
   border: 0.5px solid #d2d2d2;
   border-radius: 10px;
-  box-shadow: 5px 5px 10px -2px rgba(0, 0, 0, 0.42);
   padding: 4px;
   width: 100%;
   height: 100%;
@@ -80,3 +77,46 @@
 }
 
 /* end of science  */
+
+/* css style of arrow function */
+.most-books {
+  overflow: hidden;
+}
+
+.books-container {
+  position: relative;
+  overflow-x: hidden;
+}
+
+.scroll-button {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: rgba(0, 0, 0, 0.6);
+  color: white;
+  border: none;
+  cursor: pointer;
+  padding: 10px;
+  z-index: 1;
+}
+
+.scroll-button.left {
+  left: 0;
+}
+
+.scroll-button.right {
+  right: 0;
+}
+
+.most-books .books {
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 20px;
+  overflow-x: hidden;
+  padding-bottom: 20px; /* Adjust as needed */
+}
+
+.most-books .books .book {
+  flex: 0 0 auto;
+}
+/* css style of arrow function */

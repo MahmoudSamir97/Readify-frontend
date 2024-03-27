@@ -3,20 +3,63 @@ import { useParams } from "react-router-dom";
 import "./bookdetails.css";
 import axios from "axios";
 import { useEffect, useState } from "react";
+import { Alert, Snackbar } from "@mui/material";
+import RatingComponent from "../Rating/Rating";
+import ShowReview from "../ShowReview/ShowReview";
 
 const BookDetails = (props) => {
   const [loading, setloading] = useState(false);
+  const [isReviewSubmitted, setisReviewSubmitted] = useState(false);
   const [purchasedBooks, setPurchasedBooks] = useState([]);
+  // book reviews data
+  const [reviews, setReviews] = useState([]);
+  const [reviewsNumber, setReviewsNumber] = useState(0);
+  const [averageRating, setaverageRating] = useState(0);
+  // book reviews data
+  let [errors, setErrors] = useState(null);
   const { id } = useParams();
   const [book, setbook] = useState("");
-
+  // Snackbar
+  const [open, setOpen] = useState(false);
+  const [addedToCart, isAddedToCart] = useState(false);
+  const [addedToWhishList, isAddedToWhishList] = useState(false);
+  //
+  const renderStars = () => {
+    const stars = [];
+    for (let i = 1; i < 5; i++) {
+      stars.push(
+        <i
+          key={i}
+          className="fa fa-star"
+          style={{ color: i < averageRating ? "#FFD43B" : "#808080" }}
+        ></i>
+      );
+    }
+    return stars;
+  };
+  //
+  const handleClose = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+    setOpen(false);
+  };
+  console.log(averageRating);
+  console.log(reviewsNumber);
+  // Snackbar
   useEffect(() => {
     const fetchData = async () => {
       setloading(true);
       try {
         const req = await axios.get(`http://localhost:4000/book/${id}`);
-        const res = req.data.data.book;
-        setbook(res);
+        const bookFromDB = req.data.data.book;
+        console.log(bookFromDB);
+        setbook(bookFromDB);
+        // reviews
+        setReviews(bookFromDB.reviews);
+        setReviewsNumber(bookFromDB.numReviews);
+        setaverageRating(bookFromDB.rating);
+        // review
         setloading(false);
       } catch (error) {
         console.error("Error fetching book details:", error);
@@ -43,10 +86,8 @@ const BookDetails = (props) => {
 
   const handleAddToCart = async () => {
     try {
-      console.log("first");
       const { bookTitle, bookPrice, bookImage } = book;
       console.log(bookTitle, bookPrice, bookImage);
-
       const token = localStorage.getItem("token");
       const requestBody = {
         bookTitle,
@@ -61,6 +102,11 @@ const BookDetails = (props) => {
         requestBody,
         config
       );
+      // snackbar
+      setOpen(true);
+      isAddedToCart(true);
+      isAddedToWhishList(false);
+      // snackbar
     } catch (error) {
       console.error("Error fetching book details:", error);
     }
@@ -86,13 +132,46 @@ const BookDetails = (props) => {
         { wishlistItems: [wishlistItem] },
         config
       );
+      // snackbar
+      setOpen(true);
+      isAddedToWhishList(true);
+      isAddedToCart(false);
+
+      // snackbar
 
       console.log("Added to wishlist:", response.data);
     } catch (error) {
       console.error("Error adding to wishlist:", error);
     }
   };
-  console.log(purchasedBooks);
+  // add review
+  const handleReviewSubmit = async (selectedStar, ratingMessage) => {
+    try {
+      const token = localStorage.getItem("token");
+      console.log(id);
+      console.log(book);
+      const body = {
+        rating: selectedStar,
+        comment: ratingMessage,
+      };
+      const config = {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      };
+      const req = await axios.post(
+        `http://localhost:4000/${id}/review`,
+        body,
+        config
+      );
+      setisReviewSubmitted(true);
+      setOpen(true);
+    } catch (err) {
+      setErrors(err.response.data.message);
+    }
+  };
+
+  // show review
 
   return (
     <section className="py-5">
@@ -109,10 +188,11 @@ const BookDetails = (props) => {
                   alt="img"
                 />
               </div>
-              <div className="col-md-8 p-2">
-                <h1 className="display-5 fw-bolder">{book.bookTitle}</h1>
-                <div className="fs-5 mb-5">
-                  <span className="text">{`Price : ${book.bookPrice}$`}</span>{" "}
+              <div className="col-md-8 p-4">
+                <h1 className="display-5 fw-bolder text-center mt-0 mb-5">
+                  {book.bookTitle}
+                </h1>
+                <div className=" mb-3">
                   {/* Logic */}
                   {purchasedBooks.some(
                     (purchasedBook) =>
@@ -132,34 +212,46 @@ const BookDetails = (props) => {
                     </a>
                   )}
                   {/* Logic */}
-                  {/* {book ? (
-                    <a
-                      className="text-decoration-none ms-5  d-inline-block btn btn-outline-dark"
-                      href={book.bookPdf.url}
-                    >
-                      View Pdf
-                      <i
-                        className="ms-2 fa-solid fa-file-pdf d-inline-block"
-                        style={{ color: "#aa275b" }}
-                      ></i>
-                    </a>
-                  ) : null} */}
-                  <br />
-                  <span className="text" style={{ color: "green" }}>
-                    {`Discount : ${book.discount}%`}
-                  </span>
                 </div>
-                <span className="lead mb-5 w-50" style={{ color: "black" }}>
-                  Book Description: {book.bookDescription}
+                <span
+                  className=" mb-5 w-50 mt-0"
+                  style={{ color: "black", fontSize: "1.157rem" }}
+                >
+                  {book.bookDescription}
                 </span>
                 <br></br>
-                <span className="lead mb-5 w-50" style={{ color: "black" }}>
-                  Author: {book.Author}
+                <span className="mt-3 d-block w-50" style={{ fontSize: "1" }}>
+                  <b style={{ color: "#939597" }}>Author:</b> {book.Author}
                 </span>
-                <div className="d-flex justify-content-between align-items-start">
-                  <div>
+                {/* rating logic */}
+                {averageRating > 0 ? (
+                  <div className=" me-5">
+                    <span className="d-block w-50" style={{ fontSize: "1rem" }}>
+                      <b style={{ color: "#939597" }}>Rating:</b>{" "}
+                      {renderStars()}
+                    </span>
+                  </div>
+                ) : null}
+                {/* rating logic */}
+                {/* num of reviews */}
+                {reviewsNumber > 0 ? (
+                  <span className=" d-block w-50" style={{ fontSize: "1rem" }}>
+                    <b style={{ color: "#939597" }}>Number of reviews:</b>{" "}
+                    {reviewsNumber}
+                  </span>
+                ) : null}
+                {/* num of reviews */}
+                <span
+                  className="d-inline-block mt-3"
+                  style={{ fontSize: "1.257rem" }}
+                >
+                  {" "}
+                  <b className="text-danger">Price:</b> {book.bookPrice} egp.
+                </span>
+                <div className="d-flex justify-content-center align-items-start mt-5 text-center">
+                  <div className="mt-5 text-center">
                     <button
-                      className="btn btn-danger flex-shrink-1"
+                      className="btn btn-danger flex-shrink-1 me-3"
                       type="button"
                       onClick={handleAddToCart}
                     >
@@ -173,25 +265,108 @@ const BookDetails = (props) => {
                       WishList <i className="far fa-heart"></i>
                     </button>
                   </div>
-                  <div>
-                    {/* Gold star icon */}
-                    <button className="btn btn-link">
-                      <i className="fa fa-star" style={{ color: "gold" }}></i>
-                    </button>
-                    {/* Conditionally render the rating form */}
-                  </div>
-                </div>
-                {/* Display book reviews */}
-                <div className="row mt-4">
-                  <div className="col-md-12">
-                    <h4>Book Reviews</h4>
-                  </div>
                 </div>
               </div>
             </div>
           </div>
         )}
+        {/* add review */}
+        <RatingComponent onSubmit={handleReviewSubmit} />
+        {/* add review */}
+        {errors && (
+          <div className="text-danger text-center p-2 mb-2 mt-3">{errors}</div>
+        )}
+
+        <div className="show-container mt-5 text-start mb-4">
+          <h3
+            className="text-start mb-0 add-review-title"
+            style={{
+              color: "#939597",
+              marginBottom: "0px",
+              paddingBottom: "0px",
+            }}
+          >
+            Read what others think about this book
+          </h3>
+          <div id="review-container" className=" mb-0">
+            {/* single review */}
+            {reviews.length > 0 ? (
+              reviews.map((item, index) => {
+                return (
+                  <ShowReview
+                    key={index}
+                    name={item.name}
+                    rating={item.rating}
+                    message={item.comment}
+                  />
+                );
+              })
+            ) : (
+              <h6 className="p-3" style={{ color: "#363945" }}>
+                {" "}
+                No reviews yet for this book
+              </h6>
+            )}
+            {/* single review */}
+          </div>
+        </div>
       </div>
+      {/* Snackbar */}
+      {addedToCart ? (
+        <Snackbar
+          open={open}
+          autoHideDuration={6000}
+          onClose={handleClose}
+          anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
+          sx={{ bottom: { xs: 90, sm: 50 } }} // Adjust the bottom position based on viewport size
+        >
+          <Alert
+            onClose={handleClose}
+            severity="success"
+            sx={{ width: "100%" }}
+          >
+            The book has been added to cart
+          </Alert>
+        </Snackbar>
+      ) : null}
+      {/* anoth snackbar */}
+      {addedToWhishList ? (
+        <Snackbar
+          open={open}
+          autoHideDuration={6000}
+          onClose={handleClose}
+          anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
+          sx={{ bottom: { xs: 90, sm: 50 } }} // Adjust the bottom position based on viewport size
+        >
+          <Alert
+            onClose={handleClose}
+            severity="success"
+            sx={{ width: "100%" }}
+          >
+            The book has been added to wishlist 😍
+          </Alert>
+        </Snackbar>
+      ) : null}
+      {/* Snackbar */}
+      {/* anoth snackbar */}
+      {isReviewSubmitted ? (
+        <Snackbar
+          open={open}
+          autoHideDuration={6000}
+          onClose={handleClose}
+          anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
+          sx={{ bottom: { xs: 90, sm: 50 } }} // Adjust the bottom position based on viewport size
+        >
+          <Alert
+            onClose={handleClose}
+            severity="success"
+            sx={{ width: "100%" }}
+          >
+            Review added successfully
+          </Alert>
+        </Snackbar>
+      ) : null}
+      {/* Snackbar */}
     </section>
   );
 };
