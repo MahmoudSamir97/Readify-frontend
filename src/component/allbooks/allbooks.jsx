@@ -164,7 +164,7 @@ const handlePageClick = (page) => {
         </div>
         <div className="row mt-5 container">
             <ul className="pagination pagination-lg justify-content-end">
-              {[1, 2, 3].map((page) => (
+              {[1, 2, 3,4].map((page) => (
                 <li
                   key={page}
                   className={`page-item ${
