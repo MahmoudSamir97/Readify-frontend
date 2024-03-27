@@ -27,7 +27,7 @@ function PayButton({ cartItems }) {
   };
   return (
     <>
-      <button className="btn btn-primary mt-5" onClick={() => handleCheckout()}>
+      <button className="btn mt-5  w-100  btn-danger " onClick={() => handleCheckout()}>
         Checkout
       </button>
     </>

@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/anchor-is-valid */
 import React, { useState, useEffect } from "react";
 import "./allbooks.css";
 import { Link } from "react-router-dom";
@@ -6,6 +7,7 @@ import axios from "axios";
 
 const AllBooks = ({ setBooksData }) => {
   const [Filter, setfilter] = useState();
+  const [currentPage, setCurrentPage] = useState(1);
   const Filtration = (value) => {
     setfilter(value);
   };
@@ -16,8 +18,9 @@ const AllBooks = ({ setBooksData }) => {
   const [allBook, setallBook] = useState([]);
 
   const [loadingg, setloading] = useState(false);
+
   async function getData() {
-    const req = await axios.get("http://localhost:4000/book/AllBook");
+    const req = await axios.get(`http://localhost:4000/book/AllBook?limit=8&page=${currentPage}`);
     const res = await req.data.data.allBooks;
     console.log(res);
     setloading(true);
@@ -55,33 +58,45 @@ const AllBooks = ({ setBooksData }) => {
       });
   }, []);
 
-  useEffect(() => {
-    // Fetch books based on selected category
-    setLoading(true);
-    let url =
-      selectedCategory === "All"
-        ? "http://localhost:4000/book/AllBook"
-        : `http://localhost:4000/book/getAllBookInCategory/${selectedCategory}`;
-    axios
-      .get(url)
-      .then((response) => {
-        console.log("Books response:", response.data); // Log the response from the API
-        let booksData =
-          selectedCategory === "All"
-            ? response.data.data.allBooks
-            : response.data.data.allCategoryProducts;
-        setAllBooks(booksData || []); // Update allBooks state with fetched data
-        setLoading(false);
-      })
-      .catch((error) => {
-        console.error("Error fetching books:", error);
-        setLoading(false);
-      });
-  }, [selectedCategory]);
+// Inside your useEffect hook for fetching books based on selected category
+useEffect(() => {
+  setLoading(true);
+  let url =
+    selectedCategory === "All"
+      ? `http://localhost:4000/book/AllBook?limit=8&page=${currentPage}`
+      : `http://localhost:4000/book/getAllBookInCategory/${selectedCategory}?page=${currentPage}`;
+  axios
+    .get(url)
+    .then((response) => {
+      console.log("Books response:", response.data);
+      let booksData =
+        selectedCategory === "All"
+          ? response.data.data.allBooks
+          : response.data.data.allCategoryProducts;
+      setAllBooks(booksData || []);
+      setLoading(false);
+    })
+    .catch((error) => {
+      console.error("Error fetching books:", error);
+      if (error.response && error.response.status === 429) {
+        // Handle rate limit error
+        console.error("Too many requests. Please try again later.");
+      }
+      setLoading(false);
+    });
+}, [selectedCategory, currentPage]);
+
+// Inside your handlePageClick function
+const handlePageClick = (page) => {
+  setCurrentPage(page); // Update currentPage state
+};
+
 
   const handleCategoryChange = (event) => {
     setSelectedCategory(event.target.value);
   };
+
+
 
   return (
     <>
@@ -144,7 +159,36 @@ const AllBooks = ({ setBooksData }) => {
               </motion.div>
             ))
           )}
+
+
         </div>
+        <div className="row mt-5 container">
+            <ul className="pagination pagination-lg justify-content-end">
+              {[1, 2, 3,4].map((page) => (
+                <li
+                  key={page}
+                  className={`page-item ${
+                    currentPage === page ? "active disabled" : ""
+                  }`}
+                >
+                
+          
+                  <a
+                    className={`page-link rounded-0 mr-3 shadow-sm border-top-0 border-left-0 ${
+                      currentPage === page
+                        ? "bg-secondary text-white"
+                        : "text-dark bg-secondary text-white"
+                    }`}
+                    href="#"
+                    onClick={() => handlePageClick(page)}
+                  >
+                    {page}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+
       </section>
     </>
   );
