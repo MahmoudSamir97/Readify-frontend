@@ -6,8 +6,11 @@ import notFoundedImg from "./../../assets/images/default-avatar (1).png";
 
 import "./editProfile.css";
 import ConfirmDialog from "../ConfirmDialog/ConfirmDialog";
+import { useNavigate } from "react-router";
 
 export default function EditProfile() {
+  let navigate = useNavigate();
+
   const [error, setErrors] = useState(null);
   const [imageFile, setImageFile] = useState(null);
   const [imagePreview, setImagePreview] = useState(null);
@@ -20,9 +23,37 @@ export default function EditProfile() {
     setConfirmOpen(false);
   };
 
-  const handleConfirmDialogConfirm = () => {
-    setConfirmOpen(false);
-    // Handle deactivation logic...
+  const handleConfirmDialogConfirm = async () => {
+    try {
+      setConfirmOpen(false);
+      const token = localStorage.getItem("token");
+      const config = {
+        headers: { Authorization: `Bearer ${token}` },
+      };
+      // Send a request to deactivate the account
+      const res = await axios.post(
+        "http://127.0.0.1:4000/user/delete",
+        {}, // No data to send, just the request to deactivate
+        config
+      );
+      console.log(res);
+      setOpen(true);
+      setErrors(null);
+      localStorage.removeItem("token");
+      navigate("/login");
+      setTimeout(() => {
+        window.location.reload();
+      }, 1000);
+    } catch (err) {
+      console.log(err);
+      if (err.response && err.response.data && err.response.data.message) {
+        setErrors(err.response.data.message);
+      } else {
+        setErrors(
+          "An error occurred while deactivating the account. Please try again later."
+        );
+      }
+    }
   };
   // dialog
 
@@ -77,7 +108,6 @@ export default function EditProfile() {
         };
         const res = await axios.get("http://127.0.0.1:4000/user/data", config);
         const user = res.data.data.user;
-        console.log(user.isDeleted);
         setUserData({
           firstName: user.firstName,
           lastName: user.lastName,
@@ -94,14 +124,18 @@ export default function EditProfile() {
 
     fetchInitialUserData();
   }, []);
+  console.log(userData);
+  console.log(deactivateChecked);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    console.log(deactivateChecked);
     try {
       if (deactivateChecked) {
         setConfirmOpen(true);
       } else {
         const formData = new FormData();
+        console.log(userData);
         Object.entries(userData).forEach(([key, value]) => {
           formData.append(key, value);
         });
@@ -118,6 +152,7 @@ export default function EditProfile() {
           formData,
           config
         );
+        console.log(res);
         setOpen(true);
         setErrors(null);
         setTimeout(() => {

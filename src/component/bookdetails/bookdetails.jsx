@@ -1,5 +1,5 @@
 // import React, { useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import "./bookdetails.css";
 import axios from "axios";
 import { useEffect, useState } from "react";
@@ -11,6 +11,7 @@ const BookDetails = (props) => {
   const [loading, setloading] = useState(false);
   const [isReviewSubmitted, setisReviewSubmitted] = useState(false);
   const [purchasedBooks, setPurchasedBooks] = useState([]);
+  let navigate = useNavigate();
   // book reviews data
   const [reviews, setReviews] = useState([]);
   const [reviewsNumber, setReviewsNumber] = useState(0);
@@ -26,7 +27,7 @@ const BookDetails = (props) => {
   //
   const renderStars = () => {
     const stars = [];
-    for (let i = 1; i < 5; i++) {
+    for (let i = 0; i < 5; i++) {
       stars.push(
         <i
           key={i}
@@ -52,6 +53,7 @@ const BookDetails = (props) => {
       setloading(true);
       try {
         const req = await axios.get(`http://localhost:4000/book/${id}`);
+        console.log(req);
         const bookFromDB = req.data.data.book;
         console.log(bookFromDB);
         setbook(bookFromDB);
@@ -80,33 +82,40 @@ const BookDetails = (props) => {
         setloading(false);
       }
     };
+    const token = localStorage.getItem("token");
     fetchData();
-    getPurchasedItems();
+    if (token) {
+      getPurchasedItems();
+    }
   }, [id]);
 
   const handleAddToCart = async () => {
     try {
-      const { bookTitle, bookPrice, bookImage } = book;
-      console.log(bookTitle, bookPrice, bookImage);
       const token = localStorage.getItem("token");
-      const requestBody = {
-        bookTitle,
-        bookPrice,
-        bookImage: bookImage.url,
-      };
-      const config = {
-        headers: { Authorization: `Bearer ${token}` },
-      };
-      const req = await axios.post(
-        `http://localhost:4000/cartcpy`,
-        requestBody,
-        config
-      );
-      // snackbar
-      setOpen(true);
-      isAddedToCart(true);
-      isAddedToWhishList(false);
-      // snackbar
+      if (!token) {
+        navigate("/login");
+      } else {
+        const { bookTitle, bookPrice, bookImage } = book;
+        console.log(bookTitle, bookPrice, bookImage);
+        const requestBody = {
+          bookTitle,
+          bookPrice,
+          bookImage: bookImage.url,
+        };
+        const config = {
+          headers: { Authorization: `Bearer ${token}` },
+        };
+        const req = await axios.post(
+          `http://localhost:4000/cartcpy`,
+          requestBody,
+          config
+        );
+        // snackbar
+        setOpen(true);
+        isAddedToCart(true);
+        isAddedToWhishList(false);
+        // snackbar
+      }
     } catch (error) {
       console.error("Error fetching book details:", error);
     }
@@ -115,31 +124,30 @@ const BookDetails = (props) => {
     try {
       const token = localStorage.getItem("token");
       if (!token) {
-        console.error("Token not found in local storage");
-        return;
+        navigate("/login");
+      } else {
+        const config = {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        };
+
+        const wishlistItem = { bookId: book._id }; // Assuming the book object has an _id property
+
+        const response = await axios.post(
+          "http://localhost:4000/wishlist",
+          { wishlistItems: [wishlistItem] },
+          config
+        );
+        // snackbar
+        setOpen(true);
+        isAddedToWhishList(true);
+        isAddedToCart(false);
+
+        // snackbar
+
+        console.log("Added to wishlist:", response.data);
       }
-
-      const config = {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      };
-
-      const wishlistItem = { bookId: book._id }; // Assuming the book object has an _id property
-
-      const response = await axios.post(
-        "http://localhost:4000/wishlist",
-        { wishlistItems: [wishlistItem] },
-        config
-      );
-      // snackbar
-      setOpen(true);
-      isAddedToWhishList(true);
-      isAddedToCart(false);
-
-      // snackbar
-
-      console.log("Added to wishlist:", response.data);
     } catch (error) {
       console.error("Error adding to wishlist:", error);
     }
@@ -148,8 +156,6 @@ const BookDetails = (props) => {
   const handleReviewSubmit = async (selectedStar, ratingMessage) => {
     try {
       const token = localStorage.getItem("token");
-      console.log(id);
-      console.log(book);
       const body = {
         rating: selectedStar,
         comment: ratingMessage,
@@ -166,6 +172,9 @@ const BookDetails = (props) => {
       );
       setisReviewSubmitted(true);
       setOpen(true);
+      setTimeout(() => {
+        window.location.reload();
+      }, 1000);
     } catch (err) {
       setErrors(err.response.data.message);
     }
@@ -251,7 +260,7 @@ const BookDetails = (props) => {
                 <div className="d-flex justify-content-center align-items-start mt-5 text-center">
                   <div className="mt-5 text-center">
                     <button
-                      className="btn btn-danger flex-shrink-1 me-3"
+                      className="btn btn-danger flex-shrink-1"
                       type="button"
                       onClick={handleAddToCart}
                     >
