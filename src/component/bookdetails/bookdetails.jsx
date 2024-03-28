@@ -25,16 +25,43 @@ const BookDetails = (props) => {
   const [addedToCart, isAddedToCart] = useState(false);
   const [addedToWhishList, isAddedToWhishList] = useState(false);
   //
+  // const renderStars = () => {
+  //   const stars = [];
+  //   for (let i = 0; i < 5; i++) {
+  //     stars.push(
+  //       <i
+  //         key={i}
+  //         className="fa fa-star"
+  //         style={{ color: i < averageRating ? "#FFD43B" : "#808080" }}
+  //       ></i>
+  //     );
+  //   }
+  //   return stars;
+  // };
+
   const renderStars = () => {
     const stars = [];
+    const fullStars = Math.floor(averageRating); // Full stars
+    const hasHalfStar = averageRating - fullStars >= 0.5; // Check if there's a half star
+
     for (let i = 0; i < 5; i++) {
-      stars.push(
-        <i
-          key={i}
-          className="fa fa-star"
-          style={{ color: i < averageRating ? "#FFD43B" : "#808080" }}
-        ></i>
-      );
+      if (i < fullStars) {
+        stars.push(
+          <i key={i} className="fa fa-star" style={{ color: "#FFD43B" }}></i>
+        );
+      } else if (hasHalfStar && i === fullStars) {
+        stars.push(
+          <i
+            key={i}
+            className="fa fa-star-half-alt"
+            style={{ color: "#FFD43B" }}
+          ></i>
+        );
+      } else {
+        stars.push(
+          <i key={i} className="fa fa-star" style={{ color: "#808080" }}></i>
+        );
+      }
     }
     return stars;
   };

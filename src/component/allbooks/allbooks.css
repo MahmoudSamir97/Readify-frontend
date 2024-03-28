@@ -118,3 +118,6 @@ body {
 .detail-link:hover {
   background-color: #ffffff; /* Darker background color on hover */
 }
+.disabled {
+  color: black;
+}

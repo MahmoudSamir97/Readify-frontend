@@ -19,7 +19,8 @@
   padding: 40px;
   box-shadow: 5px 5px 15px -2px rgba(0, 0, 0, 0.42);
   margin-bottom: 20px; /* Add margin-bottom for spacing between items */
-  background-color: #a55233;
+  /* background-color: #a55233; */
+  background-color: #696969;
 }
 
 .about .about-item:first-child {
